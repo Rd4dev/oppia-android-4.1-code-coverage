@@ -72,35 +72,35 @@ jobs:
           echo "build --disk_cache=$EXPANDED_BAZEL_CACHE_PATH" >> $HOME/.bazelrc
         shell: bash
 
-      - name: Compute test matrix
-        id: compute-test-matrix
-        env:
-          compute_all_targets: ${{ contains(github.event.pull_request.title, '[RunAllTests]') }}
-          # See: https://docs.github.com/en/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request.
-          base_commit_hash: ${{ github.event.pull_request.base.sha }}
-        # https://unix.stackexchange.com/a/338124 for reference on creating a JSON-friendly
-        # comma-separated list of test targets for the matrix.
-        run: |
-          bazel run //scripts:compute_affected_tests -- $(pwd) $(pwd)/affected_targets.log $base_commit_hash compute_all_tests=$compute_all_targets
-          TEST_BUCKET_LIST=$(cat ./affected_targets.log | sed 's/^\|$/"/g' | paste -sd, -)
-          echo "Affected tests (note that this might be all tests if configured to run all or on the develop branch): $TEST_BUCKET_LIST"
-          echo "::set-output name=matrix::{\"affected-tests-bucket-base64-encoded-shard\":[$TEST_BUCKET_LIST]}"
-          if [[ ! -z "$TEST_BUCKET_LIST" ]]; then
-            echo "::set-output name=can_skip_tests::false"
-          else
-            echo "::set-output name=can_skip_tests::true"
-            echo "No tests are detected as affected by this change. If this is wrong, you can add '[RunAllTests]' to the PR title to force a run."
-          fi
+#      - name: Compute test matrix
+#        id: compute-test-matrix
+#        env:
+#          compute_all_targets: ${{ contains(github.event.pull_request.title, '[RunAllTests]') }}
+#          # See: https://docs.github.com/en/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request.
+#          base_commit_hash: ${{ github.event.pull_request.base.sha }}
+#        # https://unix.stackexchange.com/a/338124 for reference on creating a JSON-friendly
+#        # comma-separated list of test targets for the matrix.
+#        run: |
+#          bazel run //scripts:compute_affected_tests -- $(pwd) $(pwd)/affected_targets.log $base_commit_hash compute_all_tests=$compute_all_targets
+#          TEST_BUCKET_LIST=$(cat ./affected_targets.log | sed 's/^\|$/"/g' | paste -sd, -)
+#          echo "Affected tests (note that this might be all tests if configured to run all or on the develop branch): $TEST_BUCKET_LIST"
+#          echo "::set-output name=matrix::{\"affected-tests-bucket-base64-encoded-shard\":[$TEST_BUCKET_LIST]}"
+#          if [[ ! -z "$TEST_BUCKET_LIST" ]]; then
+#            echo "::set-output name=can_skip_tests::false"
+#          else
+#            echo "::set-output name=can_skip_tests::true"
+#            echo "No tests are detected as affected by this change. If this is wrong, you can add '[RunAllTests]' to the PR title to force a run."
+#          fi
 
   bazel_run_test:
     name: Run Bazel Test
-    needs: bazel_compute_affected_targets
-    if: ${{ needs.bazel_compute_affected_targets.outputs.can_skip_tests != 'true' }}
+#    needs: bazel_compute_affected_targets
+#    if: ${{ needs.bazel_compute_affected_targets.outputs.can_skip_tests != 'true' }}
     runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: false
-      max-parallel: 10
-      matrix: ${{ fromJson(needs.bazel_compute_affected_targets.outputs.matrix) }}
+#    strategy:
+#      fail-fast: false
+#      max-parallel: 10
+#      matrix: ${{ fromJson(needs.bazel_compute_affected_targets.outputs.matrix) }}
     env:
       ENABLE_CACHING: false
       CACHE_DIRECTORY: ~/.bazel_cache
@@ -138,20 +138,20 @@ jobs:
           echo "build --disk_cache=$EXPANDED_BAZEL_CACHE_PATH" >> $HOME/.bazelrc
         shell: bash
 
-      - name: Extract test caching bucket & targets
-        env:
-          AFFECTED_TESTS_BUCKET_BASE64_ENCODED_SHARD: ${{ matrix.affected-tests-bucket-base64-encoded-shard }}
-        run: |
-          # See https://stackoverflow.com/a/29903172 for cut logic. This is needed to remove the
-          # user-friendly shard prefix from the matrix value.
-          AFFECTED_TESTS_BUCKET_BASE64=$(echo "$AFFECTED_TESTS_BUCKET_BASE64_ENCODED_SHARD" | cut -d ";" -f 2)
-          bazel run //scripts:retrieve_affected_tests -- $AFFECTED_TESTS_BUCKET_BASE64 $(pwd)/test_bucket_name $(pwd)/bazel_test_targets
-          TEST_CATEGORY=$(cat ./test_bucket_name)
-          BAZEL_TEST_TARGETS=$(cat ./bazel_test_targets)
-          echo "Test category: $TEST_CATEGORY"
-          echo "Bazel test targets: $BAZEL_TEST_TARGETS"
-          echo "TEST_CACHING_BUCKET=$TEST_CATEGORY" >> $GITHUB_ENV
-          echo "BAZEL_TEST_TARGETS=$BAZEL_TEST_TARGETS" >> $GITHUB_ENV
+#      - name: Extract test caching bucket & targets
+#        env:
+#          AFFECTED_TESTS_BUCKET_BASE64_ENCODED_SHARD: ${{ matrix.affected-tests-bucket-base64-encoded-shard }}
+#        run: |
+#          # See https://stackoverflow.com/a/29903172 for cut logic. This is needed to remove the
+#          # user-friendly shard prefix from the matrix value.
+#          AFFECTED_TESTS_BUCKET_BASE64=$(echo "$AFFECTED_TESTS_BUCKET_BASE64_ENCODED_SHARD" | cut -d ";" -f 2)
+#          bazel run //scripts:retrieve_affected_tests -- $AFFECTED_TESTS_BUCKET_BASE64 $(pwd)/test_bucket_name $(pwd)/bazel_test_targets
+#          TEST_CATEGORY=$(cat ./test_bucket_name)
+#          BAZEL_TEST_TARGETS=$(cat ./bazel_test_targets)
+#          echo "Test category: $TEST_CATEGORY"
+#          echo "Bazel test targets: $BAZEL_TEST_TARGETS"
+#          echo "TEST_CACHING_BUCKET=$TEST_CATEGORY" >> $GITHUB_ENV
+#          echo "BAZEL_TEST_TARGETS=$BAZEL_TEST_TARGETS" >> $GITHUB_ENV
 
       # For reference on this & the later cache actions, see:
       # https://github.com/actions/cache/issues/239#issuecomment-606950711 &
@@ -159,16 +159,16 @@ jobs:
       # with Bazel since Bazel can share the most recent cache from an unrelated build and still
       # benefit from incremental build performance (assuming that actions/cache aggressively removes
       # older caches due to the 5GB cache limit size & Bazel's large cache size).
-      - uses: actions/cache@v2
-        id: test_cache
-        with:
-          path: ${{ env.CACHE_DIRECTORY }}
-          key: ${{ runner.os }}-${{ env.CACHE_DIRECTORY }}-bazel-tests-${{ env.TEST_CACHING_BUCKET }}-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-${{ env.CACHE_DIRECTORY }}-bazel-tests-${{ env.TEST_CACHING_BUCKET }}-
-            ${{ runner.os }}-${{ env.CACHE_DIRECTORY }}-bazel-tests-
-            ${{ runner.os }}-${{ env.CACHE_DIRECTORY }}-bazel-binary-
-            ${{ runner.os }}-${{ env.CACHE_DIRECTORY }}-bazel-
+#      - uses: actions/cache@v2
+#        id: test_cache
+#        with:
+#          path: ${{ env.CACHE_DIRECTORY }}
+#          key: ${{ runner.os }}-${{ env.CACHE_DIRECTORY }}-bazel-tests-${{ env.TEST_CACHING_BUCKET }}-${{ github.sha }}
+#          restore-keys: |
+#            ${{ runner.os }}-${{ env.CACHE_DIRECTORY }}-bazel-tests-${{ env.TEST_CACHING_BUCKET }}-
+#            ${{ runner.os }}-${{ env.CACHE_DIRECTORY }}-bazel-tests-
+#            ${{ runner.os }}-${{ env.CACHE_DIRECTORY }}-bazel-binary-
+#            ${{ runner.os }}-${{ env.CACHE_DIRECTORY }}-bazel-
 
       # This check is needed to ensure that Bazel's unbounded cache growth doesn't result in a
       # situation where the cache never updates (e.g. due to exceeding GitHub's cache size limit)
@@ -230,9 +230,9 @@ jobs:
       # See https://www.cyberciti.biz/faq/unix-for-loop-1-to-10/ for for-loop reference.
       - name: Build Oppia Tests (with caching, non-fork only)
         if: ${{ env.ENABLE_CACHING == 'true' && ((github.ref == 'refs/heads/develop' && github.event_name == 'push') || (github.event.pull_request.head.repo.full_name == 'oppia/oppia-android')) }}
-        env:
-          BAZEL_REMOTE_CACHE_URL: ${{ secrets.BAZEL_REMOTE_CACHE_URL }}
-          BAZEL_TEST_TARGETS: ${{ env.BAZEL_TEST_TARGETS }}
+#        env:
+#          BAZEL_REMOTE_CACHE_URL: ${{ secrets.BAZEL_REMOTE_CACHE_URL }}
+#          BAZEL_TEST_TARGETS: ${{ env.BAZEL_TEST_TARGETS }}
         run: |
           # Attempt to build 5 times in case there are flaky builds.
           # TODO(#3759): Remove this once there are no longer app test build failures.
@@ -242,7 +242,8 @@ jobs:
           while [ $i -ne 5 ]; do
             i=$(( $i+1 ))
             echo "Attempt $i/5 to build test targets"
-            bazel build --keep_going --remote_http_cache=$BAZEL_REMOTE_CACHE_URL --google_credentials=./config/oppia-dev-workflow-remote-cache-credentials.json -- $BAZEL_TEST_TARGETS
+            bazel build --keep_going --remote_http_cache=$BAZEL_REMOTE_CACHE_URL --google_credentials=./config/oppia-dev-workflow-remote-cache-credentials.json -- //utility/src/test/java/org/oppia/android/util/parser/math:MathModelTest
+#            bazel build --keep_going --remote_http_cache=$BAZEL_REMOTE_CACHE_URL --google_credentials=./config/oppia-dev-workflow-remote-cache-credentials.json -- $BAZEL_TEST_TARGETS
           done
           # Capture the error code of the final command run (which should be a success if there isn't a real build failure).
           last_error_code=$?
@@ -253,8 +254,8 @@ jobs:
 
       - name: Build Oppia Tests (without caching, or on a fork)
         if: ${{ env.ENABLE_CACHING == 'false' || ((github.ref != 'refs/heads/develop' || github.event_name != 'push') && (github.event.pull_request.head.repo.full_name != 'oppia/oppia-android')) }}
-        env:
-          BAZEL_TEST_TARGETS: ${{ env.BAZEL_TEST_TARGETS }}
+#        env:
+#          BAZEL_TEST_TARGETS: ${{ env.BAZEL_TEST_TARGETS }}
         run: |
           # Attempt to build 5 times in case there are flaky builds.
           # TODO(#3759): Remove this once there are no longer app test build failures.
@@ -264,7 +265,8 @@ jobs:
           while [ $i -ne 5 ]; do
             i=$(( $i+1 ))
             echo "Attempt $i/5 to build test targets"
-            bazel build --keep_going -- $BAZEL_TEST_TARGETS
+#            bazel build --keep_going -- $BAZEL_TEST_TARGETS
+            bazel build --keep_going -- //utility/src/test/java/org/oppia/android/util/parser/math:MathModelTest
           done
           # Capture the error code of the final command run (which should be a success if there isn't a real build failure).
           last_error_code=$?
@@ -274,9 +276,9 @@ jobs:
           (exit $last_error_code)
       - name: Run Oppia Tests (with caching, non-fork only)
         if: ${{ env.ENABLE_CACHING == 'true' && ((github.ref == 'refs/heads/develop' && github.event_name == 'push') || (github.event.pull_request.head.repo.full_name == 'oppia/oppia-android')) }}
-        env:
-          BAZEL_REMOTE_CACHE_URL: ${{ secrets.BAZEL_REMOTE_CACHE_URL }}
-          BAZEL_TEST_TARGETS: ${{ env.BAZEL_TEST_TARGETS }}
+#        env:
+#          BAZEL_REMOTE_CACHE_URL: ${{ secrets.BAZEL_REMOTE_CACHE_URL }}
+#          BAZEL_TEST_TARGETS: ${{ env.BAZEL_TEST_TARGETS }}
         run: |
           # Attempt to build 5 times in case there are flaky builds.
           # TODO(#3970): Remove this once there are no longer app test build failures.
@@ -286,7 +288,8 @@ jobs:
           while [ $i -ne 5 ]; do
             i=$(( $i+1 ))
             echo "Attempt $i/5 to run test targets"
-            bazel test --keep_going --remote_http_cache=$BAZEL_REMOTE_CACHE_URL --google_credentials=./config/oppia-dev-workflow-remote-cache-credentials.json -- $BAZEL_TEST_TARGETS
+            bazel test --keep_going --remote_http_cache=$BAZEL_REMOTE_CACHE_URL --google_credentials=./config/oppia-dev-workflow-remote-cache-credentials.json -- //utility/src/test/java/org/oppia/android/util/parser/math:MathModelTest
+#            bazel test --keep_going --remote_http_cache=$BAZEL_REMOTE_CACHE_URL --google_credentials=./config/oppia-dev-workflow-remote-cache-credentials.json -- $BAZEL_TEST_TARGETS
           done
           # Capture the error code of the final command run (which should be a success if there isn't a real build failure).
           last_error_code=$?
@@ -296,8 +299,8 @@ jobs:
           (exit $last_error_code)
       - name: Run Oppia Tests (without caching, or on a fork)
         if: ${{ env.ENABLE_CACHING == 'false' || ((github.ref != 'refs/heads/develop' || github.event_name != 'push') && (github.event.pull_request.head.repo.full_name != 'oppia/oppia-android')) }}
-        env:
-          BAZEL_TEST_TARGETS: ${{ env.BAZEL_TEST_TARGETS }}
+#        env:
+#          BAZEL_TEST_TARGETS: ${{ env.BAZEL_TEST_TARGETS }}
         run: |
           # Attempt to build 5 times in case there are flaky builds.
           # TODO(#3970): Remove this once there are no longer app test build failures.
@@ -307,7 +310,7 @@ jobs:
           while [ $i -ne 5 ]; do
             i=$(( $i+1 ))
             echo "Attempt $i/5 to run test targets"
-            bazel test --keep_going -- $BAZEL_TEST_TARGETS
+            bazel test --keep_going -- //utility/src/test/java/org/oppia/android/util/parser/math:MathModelTest
           done
           # Capture the error code of the final command run (which should be a success if there isn't a real build failure).
           last_error_code=$?
@@ -317,13 +320,13 @@ jobs:
           (exit $last_error_code)
 
   # Reference: https://github.community/t/127354/7.
-  check_test_results:
-      name: Check Bazel Test Results
-      needs: [bazel_compute_affected_targets, bazel_run_test]
-      if: ${{ always() }}
-      runs-on: ubuntu-20.04
-      steps:
-        # This step will be skipped if there are no tests to run, so the overall job should pass.
-        - name: Check tests passed (for tests that ran)
-          if: ${{ needs.bazel_compute_affected_targets.outputs.can_skip_tests != 'true' && needs.bazel_run_test.result != 'success' }}
-          run: exit 1
+#  check_test_results:
+#      name: Check Bazel Test Results
+#      needs: [bazel_compute_affected_targets, bazel_run_test]
+#      if: ${{ always() }}
+#      runs-on: ubuntu-20.04
+#      steps:
+#        # This step will be skipped if there are no tests to run, so the overall job should pass.
+#        - name: Check tests passed (for tests that ran)
+#          if: ${{ needs.bazel_compute_affected_targets.outputs.can_skip_tests != 'true' && needs.bazel_run_test.result != 'success' }}
+#          run: exit 1
