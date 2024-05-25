@@ -9,7 +9,11 @@ import java.io.File
  */
 class GitClient(
   private val workingDirectory: File,
+<<<<<<< HEAD
   private val baseCommit: String,
+=======
+  private val baseDevelopBranchReference: String,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   private val commandExecutor: CommandExecutor
 ) {
   /** The commit hash of the HEAD of the local Git repository. */

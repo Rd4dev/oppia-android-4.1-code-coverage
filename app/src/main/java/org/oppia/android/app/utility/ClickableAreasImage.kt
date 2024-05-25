@@ -26,7 +26,19 @@ class ClickableAreasImage(
 ) {
   private val defaultRegionView by lazy { bindingInterface.getDefaultRegion(parentView) }
 
+<<<<<<< HEAD
   init { initializeShowRegionTouchListener() }
+=======
+  init {
+    imageView.setOnTouchListener { view, motionEvent ->
+      if (motionEvent.action == MotionEvent.ACTION_DOWN) {
+        onPhotoTap(motionEvent.x, motionEvent.y)
+      }
+      view.performClick()
+      return@setOnTouchListener false
+    }
+  }
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 
   /**
    * Called when an image is clicked.
@@ -104,7 +116,17 @@ class ClickableAreasImage(
       newView.isFocusable = true
       newView.isFocusableInTouchMode = true
       newView.tag = clickableArea.label
+<<<<<<< HEAD
       newView.initializeToggleRegionTouchListener(clickableArea)
+=======
+      newView.setOnTouchListener { view, event ->
+        if (event.action == MotionEvent.ACTION_DOWN) {
+          showOrHideRegion(newView, clickableArea)
+        }
+        view.performClick()
+        return@setOnTouchListener true
+      }
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
       if (isAccessibilityEnabled) {
         // Make default region visibility gone when talkback enabled to avoid any accidental touch.
         defaultRegionView.isVisible = false

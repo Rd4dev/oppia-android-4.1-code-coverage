@@ -81,8 +81,13 @@ private class FilterPerLanguageResources {
       }
     val updatedResourceTable = resourceTable.recompute(supportedLanguageLocales)
     println(
+<<<<<<< HEAD
       "${removedLanguageCodes.size} resources are being removed that are tied to unsupported" +
         " languages: ${removedLanguageCodes.map { it.androidBcp47QualifiedCode }} (size" +
+=======
+      "${resourceTable.countResources() - updatedResourceTable.countResources()} resources are" +
+        " being removed that are tied to unsupported languages: $removedLanguageCodes (size" +
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         " reduction: ${resourceTable.serializedSize - updatedResourceTable.serializedSize} bytes)."
     )
 
@@ -98,16 +103,30 @@ private class FilterPerLanguageResources {
     }
   }
 
+<<<<<<< HEAD
   private fun ResourceTable.recompute(allowedLanguageLocales: Set<LanguageLocale>): ResourceTable {
     val updatedPackages = packageList.mapNotNull { it.recompute(allowedLanguageLocales) }
+=======
+  private fun ResourceTable.countResources(): Int = packageList.sumOf { it.countResources() }
+
+  private fun ResourceTable.recompute(allowedLanguageCodes: Set<String>): ResourceTable {
+    val updatedPackages = packageList.mapNotNull { it.recompute(allowedLanguageCodes) }
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     return toBuilder().apply {
       clearPackage()
       addAllPackage(updatedPackages)
     }.build()
   }
 
+<<<<<<< HEAD
   private fun Package.recompute(allowedLanguageLocales: Set<LanguageLocale>): Package? {
     val updatedTypes = typeList.mapNotNull { it.recompute(allowedLanguageLocales) }
+=======
+  private fun Package.countResources(): Int = typeList.sumOf { it.countResources() }
+
+  private fun Package.recompute(allowedLanguageCodes: Set<String>): Package? {
+    val updatedTypes = typeList.mapNotNull { it.recompute(allowedLanguageCodes) }
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     return if (updatedTypes.isNotEmpty()) {
       toBuilder().apply {
         clearType()
@@ -116,8 +135,15 @@ private class FilterPerLanguageResources {
     } else null
   }
 
+<<<<<<< HEAD
   private fun Type.recompute(allowedLanguageLocales: Set<LanguageLocale>): Type? {
     val updatedEntries = entryList.mapNotNull { it.recompute(allowedLanguageLocales) }
+=======
+  private fun Type.countResources(): Int = entryList.sumOf { it.configValueCount }
+
+  private fun Type.recompute(allowedLanguageCodes: Set<String>): Type? {
+    val updatedEntries = entryList.mapNotNull { it.recompute(allowedLanguageCodes) }
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     return if (updatedEntries.isNotEmpty()) {
       toBuilder().apply {
         clearEntry()

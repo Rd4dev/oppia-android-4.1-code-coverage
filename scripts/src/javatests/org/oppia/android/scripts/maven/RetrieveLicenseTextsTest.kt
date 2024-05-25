@@ -61,8 +61,13 @@ class RetrieveLicenseTextsTest {
 
   @Test
   fun testScript_oneArgument_printsUsageStringAndThrowsException() {
+<<<<<<< HEAD
     val exception = assertThrows(Exception::class) {
       RetrieveLicenseTexts(mockArtifactPropertyFetcher).main(arrayOf())
+=======
+    val exception = assertThrows<Exception>() {
+      RetrieveLicenseTexts(mockLicenseFetcher).main(arrayOf())
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     }
 
     assertThat(exception).hasMessageThat().contains(TOO_FEW_ARGS_FAILURE)
@@ -71,8 +76,13 @@ class RetrieveLicenseTextsTest {
 
   @Test
   fun testScript_oneArguments_printsUsageStringAndThrowsException() {
+<<<<<<< HEAD
     val exception = assertThrows(Exception::class) {
       RetrieveLicenseTexts(mockArtifactPropertyFetcher).main(
+=======
+    val exception = assertThrows<Exception>() {
+      RetrieveLicenseTexts(mockLicenseFetcher).main(
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         arrayOf(
           "${tempFolder.root}/values"
         )
@@ -90,8 +100,13 @@ class RetrieveLicenseTextsTest {
     val pbFile = tempFolder.newFile("scripts/assets/maven_dependencies.pb")
     pbFile.outputStream().use { mavenDependencyList.writeTo(it) }
 
+<<<<<<< HEAD
     val exception = assertThrows(Exception::class) {
       RetrieveLicenseTexts(mockArtifactPropertyFetcher).main(
+=======
+    val exception = assertThrows<Exception>() {
+      RetrieveLicenseTexts(mockLicenseFetcher).main(
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         arrayOf(
           "${tempFolder.root}/values",
           "${tempFolder.root}/scripts/assets/maven_dependencies.pb"
@@ -109,8 +124,13 @@ class RetrieveLicenseTextsTest {
     val pbFile = tempFolder.newFile("scripts/assets/maven_dependencies.pb")
     pbFile.outputStream().use { mavenDependencyList.writeTo(it) }
 
+<<<<<<< HEAD
     val exception = assertThrows(Exception::class) {
       RetrieveLicenseTexts(mockArtifactPropertyFetcher).main(
+=======
+    val exception = assertThrows<Exception>() {
+      RetrieveLicenseTexts(mockLicenseFetcher).main(
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         arrayOf(
           "${tempFolder.root}/values",
           "${tempFolder.root}/scripts/assets/maven_dependencies.pb"
@@ -139,8 +159,13 @@ class RetrieveLicenseTextsTest {
     val pbFile = tempFolder.newFile("scripts/assets/maven_dependencies.pb")
     pbFile.outputStream().use { mavenDependencyList.writeTo(it) }
 
+<<<<<<< HEAD
     val exception = assertThrows(Exception::class) {
       RetrieveLicenseTexts(mockArtifactPropertyFetcher).main(
+=======
+    val exception = assertThrows<Exception>() {
+      RetrieveLicenseTexts(mockLicenseFetcher).main(
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         arrayOf(
           "${tempFolder.root}/values",
           "${tempFolder.root}/scripts/assets/maven_dependencies.pb"

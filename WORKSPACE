@@ -12,8 +12,13 @@ load("//third_party:versions.bzl", "HTTP_DEPENDENCY_VERSIONS", "MAVEN_REPOSITORI
 # TODO(#1542): Sync Android SDK version with the manifest.
 android_sdk_repository(
     name = "androidsdk",
+<<<<<<< HEAD
     api_level = BUILD_SDK_VERSION,
     build_tools_version = BUILD_TOOLS_VERSION,
+=======
+    api_level = 33,
+    build_tools_version = "29.0.2",
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 )
 
 # Add support for JVM rules: https://github.com/bazelbuild/rules_jvm_external
@@ -119,6 +124,7 @@ load("@tools_android//tools/googleservices:defs.bzl", "google_services_workspace
 
 google_services_workspace_dependencies()
 
+<<<<<<< HEAD
 git_repository(
     name = "circularimageview",
     commit = "35d08ba88a4a22e6e9ac96bdc5a68be27b55d09f",
@@ -126,13 +132,15 @@ git_repository(
     shallow_since = "1622148929 -0700",
 )
 
+=======
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 # A custom version of Android SVG is needed since custom changes needed to be added to the library
 # to correctly size in-line SVGs (such as those needed for LaTeX-based math expressions).
 git_repository(
     name = "androidsvg",
-    commit = "4bc1d26412f0fb9fd4ef263fa93f6a64f4d4dbcf",
+    commit = "5bc9c7553e94c3476e8ea32baea3c77567228fcd",
     remote = "https://github.com/oppia/androidsvg",
-    shallow_since = "1647295507 -0700",
+    shallow_since = "1686304726 -0700",
 )
 
 git_repository(

@@ -8,17 +8,21 @@ kt_android_library(
     name = "state_controller",
     srcs = [
         "AppStartupStateController.kt",
+        "DeprecationController.kt",
     ],
     visibility = ["//:oppia_api_visibility"],
     deps = [
         ":exploration_meta_data_retriever",
         "//data/src/main/java/org/oppia/android/data/persistence:cache_store",
         "//domain/src/main/java/org/oppia/android/domain/oppialogger:oppia_logger",
+        "//model/src/main/proto:deprecation_java_proto_lite",
         "//model/src/main/proto:onboarding_java_proto_lite",
         "//third_party:javax_inject_javax_inject",
+        "//utility",
         "//utility/src/main/java/org/oppia/android/util/data:data_provider",
         "//utility/src/main/java/org/oppia/android/util/data:data_providers",
         "//utility/src/main/java/org/oppia/android/util/extensions:bundle_extensions",
+        "//utility/src/main/java/org/oppia/android/util/extensions:context_extensions",
     ],
 )
 
@@ -53,3 +57,29 @@ kt_android_library(
         "//third_party:javax_inject_javax_inject",
     ],
 )
+<<<<<<< HEAD
+=======
+
+kt_android_library(
+    name = "deprecation_controller",
+    srcs = [
+        "DeprecationController.kt",
+    ],
+    visibility = ["//:oppia_api_visibility"],
+    deps = [
+        ":exploration_meta_data_retriever",
+        "//data/src/main/java/org/oppia/android/data/persistence:cache_store",
+        "//domain/src/main/java/org/oppia/android/domain/oppialogger:oppia_logger",
+        "//model/src/main/proto:deprecation_java_proto_lite",
+        "//model/src/main/proto:onboarding_java_proto_lite",
+        "//third_party:javax_inject_javax_inject",
+        "//utility",
+        "//utility/src/main/java/org/oppia/android/util/data:data_provider",
+        "//utility/src/main/java/org/oppia/android/util/data:data_providers",
+        "//utility/src/main/java/org/oppia/android/util/extensions:bundle_extensions",
+        "//utility/src/main/java/org/oppia/android/util/extensions:context_extensions",
+    ],
+)
+
+dagger_rules()
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67

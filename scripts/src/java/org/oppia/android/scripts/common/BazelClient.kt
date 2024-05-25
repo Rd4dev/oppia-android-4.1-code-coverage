@@ -8,7 +8,14 @@ import java.util.Locale
  * Utility class to query & interact with a Bazel workspace on the local filesystem (residing within
  * the specified root directory).
  */
+<<<<<<< HEAD
 class BazelClient(private val rootDirectory: File, private val commandExecutor: CommandExecutor) {
+=======
+class BazelClient(
+  private val rootDirectory: File,
+  private val commandExecutor: CommandExecutor
+) {
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   /** Returns all Bazel test targets in the workspace. */
   fun retrieveAllTestTargets(): List<String> {
     return correctPotentiallyBrokenTargetNames(

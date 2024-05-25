@@ -49,6 +49,7 @@ import org.oppia.android.domain.classify.rules.numericexpressioninput.NumericExp
 import org.oppia.android.domain.classify.rules.numericinput.NumericInputRuleModule
 import org.oppia.android.domain.classify.rules.ratioinput.RatioInputModule
 import org.oppia.android.domain.classify.rules.textinput.TextInputRuleModule
+import org.oppia.android.domain.exploration.ExplorationProgressModule
 import org.oppia.android.domain.exploration.ExplorationStorageModule
 import org.oppia.android.domain.hintsandsolution.HintsAndSolutionConfigModule
 import org.oppia.android.domain.hintsandsolution.HintsAndSolutionProdModule
@@ -68,6 +69,7 @@ import org.oppia.android.domain.workmanager.WorkManagerConfigurationModule
 import org.oppia.android.testing.TestLogReportingModule
 import org.oppia.android.testing.assertThrows
 import org.oppia.android.testing.data.DataProviderTestMonitor
+import org.oppia.android.testing.firebase.TestAuthenticationModule
 import org.oppia.android.testing.junit.InitializeDefaultLocaleRule
 import org.oppia.android.testing.junit.OppiaParameterizedTestRunner
 import org.oppia.android.testing.junit.OppiaParameterizedTestRunner.Iteration
@@ -130,6 +132,7 @@ class AppLanguageResourceHandlerTest {
   @Parameter lateinit var expectedDisplayText: String
 
   private val audioLanguage by lazy { AudioLanguage.valueOf(lang) }
+  private val oppiaLanguage by lazy { OppiaLanguage.valueOf(lang) }
 
   @Before
   fun setUp() {
@@ -238,7 +241,7 @@ class AppLanguageResourceHandlerTest {
     updateAppLanguageTo(OppiaLanguage.ENGLISH)
     val handler = retrieveAppLanguageResourceHandler()
 
-    assertThrows(Resources.NotFoundException::class) { handler.getStringInLocale(-1) }
+    assertThrows<Resources.NotFoundException>() { handler.getStringInLocale(-1) }
   }
 
   @Test
@@ -275,7 +278,7 @@ class AppLanguageResourceHandlerTest {
     updateAppLanguageTo(OppiaLanguage.ENGLISH)
     val handler = retrieveAppLanguageResourceHandler()
 
-    assertThrows(Resources.NotFoundException::class) { handler.getStringInLocaleWithWrapping(-1) }
+    assertThrows<Resources.NotFoundException>() { handler.getStringInLocaleWithWrapping(-1) }
   }
 
   @Test
@@ -312,7 +315,7 @@ class AppLanguageResourceHandlerTest {
     updateAppLanguageTo(OppiaLanguage.ENGLISH)
     val handler = retrieveAppLanguageResourceHandler()
 
-    assertThrows(Resources.NotFoundException::class) {
+    assertThrows<Resources.NotFoundException>() {
       handler.getStringInLocaleWithoutWrapping(-1)
     }
   }
@@ -332,7 +335,7 @@ class AppLanguageResourceHandlerTest {
     updateAppLanguageTo(OppiaLanguage.ENGLISH)
     val handler = retrieveAppLanguageResourceHandler()
 
-    assertThrows(Resources.NotFoundException::class) { handler.getStringArrayInLocale(-1) }
+    assertThrows<Resources.NotFoundException>() { handler.getStringArrayInLocale(-1) }
   }
 
   @Test
@@ -362,7 +365,7 @@ class AppLanguageResourceHandlerTest {
     updateAppLanguageTo(OppiaLanguage.ENGLISH)
     val handler = retrieveAppLanguageResourceHandler()
 
-    assertThrows(Resources.NotFoundException::class) { handler.getQuantityStringInLocale(-1, 0) }
+    assertThrows<Resources.NotFoundException>() { handler.getQuantityStringInLocale(-1, 0) }
   }
 
   @Test
@@ -393,7 +396,7 @@ class AppLanguageResourceHandlerTest {
     updateAppLanguageTo(OppiaLanguage.ENGLISH)
     val handler = retrieveAppLanguageResourceHandler()
 
-    assertThrows(Resources.NotFoundException::class) {
+    assertThrows<Resources.NotFoundException>() {
       handler.getQuantityStringInLocaleWithWrapping(-1, 0)
     }
   }
@@ -428,7 +431,7 @@ class AppLanguageResourceHandlerTest {
     updateAppLanguageTo(OppiaLanguage.ENGLISH)
     val handler = retrieveAppLanguageResourceHandler()
 
-    assertThrows(Resources.NotFoundException::class) {
+    assertThrows<Resources.NotFoundException>() {
       handler.getQuantityStringInLocaleWithoutWrapping(-1, 0)
     }
   }
@@ -491,6 +494,7 @@ class AppLanguageResourceHandlerTest {
   // testing functionality that's expected to go away with later language selection work.
   // TODO(#3793): Remove this once OppiaLanguage is used as the source of truth.
   @Test
+<<<<<<< HEAD
   @Iteration("hi", "lang=HINDI_AUDIO_LANGUAGE", "expectedDisplayText=हिन्दी")
   @Iteration("fr", "lang=FRENCH_AUDIO_LANGUAGE", "expectedDisplayText=Français")
   @Iteration("zh", "lang=CHINESE_AUDIO_LANGUAGE", "expectedDisplayText=中文")
@@ -500,12 +504,48 @@ class AppLanguageResourceHandlerTest {
   @Iteration("unknown", "lang=UNRECOGNIZED", "expectedDisplayText=English")
   @Iteration("en", "lang=ENGLISH_AUDIO_LANGUAGE", "expectedDisplayText=English")
   fun testComputeLocalizedDisplayName_englishLocale_forAllLanguages_hasTheExpectedOutput() {
+=======
+  @RunParameterized(
+    Iteration("hi", "lang=HINDI_AUDIO_LANGUAGE", "expectedDisplayText=हिन्दी"),
+    Iteration("fr", "lang=FRENCH_AUDIO_LANGUAGE", "expectedDisplayText=Français"),
+    Iteration("zh", "lang=CHINESE_AUDIO_LANGUAGE", "expectedDisplayText=中文"),
+    Iteration("pr-pt", "lang=BRAZILIAN_PORTUGUESE_LANGUAGE", "expectedDisplayText=Português"),
+    Iteration("ar", "lang=ARABIC_LANGUAGE", "expectedDisplayText=العربية"),
+    Iteration("pcm", "lang=NIGERIAN_PIDGIN_LANGUAGE", "expectedDisplayText=Naijá"),
+    Iteration("unsp", "lang=AUDIO_LANGUAGE_UNSPECIFIED", "expectedDisplayText=English"),
+    Iteration("none", "lang=NO_AUDIO", "expectedDisplayText=English"),
+    Iteration("unknown", "lang=UNRECOGNIZED", "expectedDisplayText=English"),
+    Iteration("en", "lang=ENGLISH_AUDIO_LANGUAGE", "expectedDisplayText=English")
+  )
+  fun testComputeLocalizedDisplayName_englishLocale_forAllAudioLanguages_hasTheExpectedOutput() {
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     updateAppLanguageTo(OppiaLanguage.ENGLISH)
     val handler = retrieveAppLanguageResourceHandler()
 
     val displayText = handler.computeLocalizedDisplayName(audioLanguage)
 
     // The display name is localized to that language rather than the current locale (English).
+    assertThat(displayText).isEqualTo(expectedDisplayText)
+  }
+
+  @Test
+  @RunParameterized(
+    Iteration("unknown", "lang=LANGUAGE_UNSPECIFIED", "expectedDisplayText=English"),
+    Iteration("ar", "lang=ARABIC", "expectedDisplayText=العربية"),
+    Iteration("en", "lang=ENGLISH", "expectedDisplayText=English"),
+    Iteration("hi", "lang=HINDI", "expectedDisplayText=हिन्दी"),
+    Iteration("hi-en", "lang=HINGLISH", "expectedDisplayText=हिन्दी"),
+    Iteration("pt", "lang=PORTUGUESE", "expectedDisplayText=Português"),
+    Iteration("pr-pt", "lang=BRAZILIAN_PORTUGUESE", "expectedDisplayText=Português"),
+    Iteration("sw", "lang=SWAHILI", "expectedDisplayText=Kiswahili"),
+    Iteration("pcm", "lang=NIGERIAN_PIDGIN", "expectedDisplayText=Naijá")
+  )
+  fun testComputeLocalizedDisplayName_englishLocale_forAllDisplayLanguages_hasTheExpectedOutput() {
+    updateAppLanguageTo(OppiaLanguage.ENGLISH)
+    val handler = retrieveAppLanguageResourceHandler()
+
+    val displayText = handler.computeLocalizedDisplayName(oppiaLanguage)
+
     assertThat(displayText).isEqualTo(expectedDisplayText)
   }
 
@@ -595,7 +635,8 @@ class AppLanguageResourceHandlerTest {
       LoggingIdentifierModule::class, ApplicationLifecycleModule::class,
       SyncStatusModule::class, MetricLogSchedulerModule::class, TestingBuildFlavorModule::class,
       EventLoggingConfigurationModule::class, ActivityRouterModule::class,
-      CpuPerformanceSnapshotterModule::class
+      CpuPerformanceSnapshotterModule::class, ExplorationProgressModule::class,
+      TestAuthenticationModule::class
     ]
   )
   interface TestApplicationComponent : ApplicationComponent {

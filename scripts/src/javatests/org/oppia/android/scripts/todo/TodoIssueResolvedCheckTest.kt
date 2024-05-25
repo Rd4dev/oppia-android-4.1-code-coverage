@@ -44,7 +44,7 @@ class TodoIssueResolvedCheckTest {
     val testContent1 =
       """
       // Test comment 1
-      
+
       // Test comment 2
       """.trimIndent()
     val testContent2 =
@@ -68,7 +68,7 @@ class TodoIssueResolvedCheckTest {
     val testContent1 =
       """
       // TODO(#169877): test description 1
-      
+
       // TODO(#1021211): test description 2
       """.trimIndent()
     val testContent2 =
@@ -92,7 +92,7 @@ class TodoIssueResolvedCheckTest {
     val testContent1 =
       """
       // TODO(#169877): test description 1
-      
+
       // TODO(#1021211): test description 2
       """.trimIndent()
     val testContent2 =
@@ -104,7 +104,13 @@ class TodoIssueResolvedCheckTest {
     tempFile1.writeText(testContent1)
     tempFile2.writeText(testContent2)
 
+<<<<<<< HEAD
     val exception = assertThrows(Exception::class) { runScript(169877, "abmzuyt") }
+=======
+    val exception = assertThrows<Exception>() {
+      main(retrieveTestFilesDirectoryPath(), "169877", "abmzuyt")
+    }
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 
     assertThat(exception).hasMessageThat().contains(CLOSED_ISSUE_CHECK_FAILED_OUTPUT_INDICATOR)
     val failureMessage =
@@ -112,7 +118,11 @@ class TodoIssueResolvedCheckTest {
       The following TODOs are unresolved for the closed issue:
       - TempFile1.kt:1
       - TempFile2.bazel:3
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
       $wikiReferenceNote
       """.trimIndent()
     assertThat(outContent.toString().trim()).isEqualTo(failureMessage)
@@ -127,7 +137,7 @@ class TodoIssueResolvedCheckTest {
     val testContent1 =
       """
       // TODO(#169877): test description 1
-      
+
       // TODO(#1021211): test description 2
       """.trimIndent()
     val testContent2 =
@@ -139,7 +149,7 @@ class TodoIssueResolvedCheckTest {
     val testContent3 =
       """
       <!-- TODO(#169877): test description 4 -->
-      
+
       <!-- TODO(#174144): test description 5 -->
       <!-- TODO(#169877): test description 6 -->
       """.trimIndent()
@@ -147,17 +157,31 @@ class TodoIssueResolvedCheckTest {
     tempFile2.writeText(testContent2)
     tempFile3.writeText(testContent3)
 
+<<<<<<< HEAD
     val exception = assertThrows(Exception::class) { runScript(169877, "abmzuyt") }
+=======
+    val exception = assertThrows<Exception>() {
+      main(retrieveTestFilesDirectoryPath(), "169877", "abmzuyt")
+    }
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 
     assertThat(exception).hasMessageThat().contains(CLOSED_ISSUE_CHECK_FAILED_OUTPUT_INDICATOR)
     val failureMessage =
       """
       The following TODOs are unresolved for the closed issue:
+<<<<<<< HEAD
       - TempFile2.bazel:3
       - TempFile3.xml:1
       - TempFile3.xml:4
       - extra_dir/TempFile1.kt:1
       
+=======
+      - TempFile1.kt:1
+      - TempFile2.bazel:3
+      - TempFile3.xml:1
+      - TempFile3.xml:4
+
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
       $wikiReferenceNote
       """.trimIndent()
     assertThat(outContent.toString().trim()).isEqualTo(failureMessage)
@@ -171,7 +195,7 @@ class TodoIssueResolvedCheckTest {
     val testContent1 =
       """
       // TODO(#169877): test description 1
-      
+
       // TODO(#1021211): test description 2
       """.trimIndent()
     val testContent2 =
@@ -183,7 +207,7 @@ class TodoIssueResolvedCheckTest {
     val testContent3 =
       """
       <!-- TODO(#169877): test description 4 -->
-      
+
       <!-- TODO(#174144): test description 5 -->
       <!-- TODO(#169877): test description 6 -->
       """.trimIndent()
@@ -191,8 +215,16 @@ class TodoIssueResolvedCheckTest {
     tempFile2.writeText(testContent2)
     tempFile3.writeText(testContent3)
 
+<<<<<<< HEAD
     assertThrows(Exception::class) { runScript(169877, "abmzuyt") }
     val fileContentList = File("${tempFolder.root}/testfiles/script_failures.txt").readLines()
+=======
+    val exception = assertThrows<Exception>() {
+      main(retrieveTestFilesDirectoryPath(), "169877", "abmzuyt")
+    }
+    val fileContentList =
+      File("${retrieveTestFilesDirectoryPath()}/script_failures.txt").readLines()
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     assertThat(fileContentList).containsExactly(
       "The issue is reopened because of the following unresolved TODOs:",
       "https://github.com/oppia/oppia-android/blob/abmzuyt/TempFile1.kt#L1",

@@ -13,7 +13,11 @@ import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.oppia.android.scripts.common.CommandExecutorImpl
 import org.oppia.android.scripts.common.ScriptBackgroundCoroutineDispatcher
+<<<<<<< HEAD
 import org.oppia.android.scripts.license.MavenDependenciesRetriever.MavenListDependency
+=======
+import org.oppia.android.scripts.maven.model.MavenListDependency
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 import org.oppia.android.scripts.proto.DirectLinkOnly
 import org.oppia.android.scripts.proto.ExtractedCopyLink
 import org.oppia.android.scripts.proto.License
@@ -37,7 +41,13 @@ class MavenDependenciesRetrieverTest {
 
   private val mockArtifactPropertyFetcher by lazy { initializeArtifactPropertyFetcher() }
   private val commandExecutor by lazy { initializeCommandExecutorWithLongProcessWaitTime() }
+<<<<<<< HEAD
   private val mavenDependenciesRetriever by lazy { initializeMavenDependenciesRetriever() }
+=======
+  private val mavenDependenciesRetriever by lazy {
+    initializeMavenDependenciesRetriever()
+  }
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   private val scriptBgDispatcher by lazy { ScriptBackgroundCoroutineDispatcher() }
 
   private lateinit var testBazelWorkspace: TestBazelWorkspace
@@ -1520,7 +1530,7 @@ class MavenDependenciesRetrieverTest {
             "com.google.protobuf:protobuf-lite"
           ]
         }
-      }  
+      }
       """.trimIndent()
     )
   }

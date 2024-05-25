@@ -1,6 +1,7 @@
 package org.oppia.android.scripts.common
 
 import kotlinx.coroutines.CoroutineScope
+<<<<<<< HEAD
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException
@@ -12,6 +13,10 @@ import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
+=======
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 import java.io.File
 import java.io.InputStream
 import java.util.concurrent.TimeUnit
@@ -43,6 +48,7 @@ class CommandExecutorImpl(
         .directory(workingDir)
         .redirectErrorStream(includeErrorOutput)
         .start()
+<<<<<<< HEAD
 
     // Consume the input & error streams individually, and separately from waiting for the process
     // to complete (since consuming the output channels may be required for the process to actually
@@ -59,6 +65,12 @@ class CommandExecutorImpl(
       }
     } catch (e: TimeoutCancellationException) {
       throw IllegalStateException("Process did not finish within the expected timeout", e)
+=======
+    val finished = runBlocking {
+      CoroutineScope(scriptBgDispatcher).async {
+        process.waitFor(processTimeout, processTimeoutUnit)
+      }.await()
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     }
     check(finished) { "Process did not finish within the expected timeout" }
     return CommandResult(

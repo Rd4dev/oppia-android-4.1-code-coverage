@@ -12,7 +12,11 @@ import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.oppia.android.scripts.common.CommandExecutorImpl
 import org.oppia.android.scripts.common.ScriptBackgroundCoroutineDispatcher
+<<<<<<< HEAD
 import org.oppia.android.scripts.license.MavenArtifactPropertyFetcher
+=======
+import org.oppia.android.scripts.license.LicenseFetcher
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 import org.oppia.android.scripts.proto.DirectLinkOnly
 import org.oppia.android.scripts.proto.ExtractedCopyLink
 import org.oppia.android.scripts.proto.License
@@ -33,11 +37,17 @@ import java.util.concurrent.TimeUnit
 class GenerateMavenDependenciesListTest {
   @field:[Rule JvmField] val tempFolder = TemporaryFolder()
 
+  @field:[Rule JvmField] val tempFolder = TemporaryFolder()
+
   private val outContent: ByteArrayOutputStream = ByteArrayOutputStream()
   private val originalOut: PrintStream = System.out
 
   private val scriptBgDispatcher by lazy { ScriptBackgroundCoroutineDispatcher() }
+<<<<<<< HEAD
   private val mockArtifactPropertyFetcher by lazy { initializeArtifactPropertyFetcher() }
+=======
+  private val mockLicenseFetcher by lazy { initializeLicenseFetcher() }
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   private val commandExecutor by lazy { initializeCommandExecutorWithLongProcessWaitTime() }
   private lateinit var testBazelWorkspace: TestBazelWorkspace
 
@@ -63,9 +73,13 @@ class GenerateMavenDependenciesListTest {
     val coordsList = listOf(DEP_WITH_SCRAPABLE_LICENSE, DEP_WITH_DIRECT_LINK_ONLY_LICENSE)
     setUpBazelEnvironment(coordsList)
 
-    val exception = assertThrows(Exception::class) {
+    val exception = assertThrows<Exception>() {
       GenerateMavenDependenciesList(
+<<<<<<< HEAD
         mockArtifactPropertyFetcher,
+=======
+        mockLicenseFetcher,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         scriptBgDispatcher,
         commandExecutor
       ).main(
@@ -148,9 +162,13 @@ class GenerateMavenDependenciesListTest {
     )
     setUpBazelEnvironment(coordsList)
 
-    val exception = assertThrows(Exception::class) {
+    val exception = assertThrows<Exception>() {
       GenerateMavenDependenciesList(
+<<<<<<< HEAD
         mockArtifactPropertyFetcher,
+=======
+        mockLicenseFetcher,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         scriptBgDispatcher,
         commandExecutor
       ).main(
@@ -173,9 +191,13 @@ class GenerateMavenDependenciesListTest {
     val coordsList = listOf(DEP_WITH_DIRECT_LINK_ONLY_LICENSE)
     setUpBazelEnvironment(coordsList)
 
-    val exception = assertThrows(Exception::class) {
+    val exception = assertThrows<Exception>() {
       GenerateMavenDependenciesList(
+<<<<<<< HEAD
         mockArtifactPropertyFetcher,
+=======
+        mockLicenseFetcher,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         scriptBgDispatcher,
         commandExecutor
       ).main(
@@ -216,9 +238,13 @@ class GenerateMavenDependenciesListTest {
     val coordsList = listOf(DEP_WITH_SCRAPABLE_AND_EXTRACTED_COPY_LICENSES)
     setUpBazelEnvironment(coordsList)
 
-    val exception = assertThrows(Exception::class) {
+    val exception = assertThrows<Exception>() {
       GenerateMavenDependenciesList(
+<<<<<<< HEAD
         mockArtifactPropertyFetcher,
+=======
+        mockLicenseFetcher,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         scriptBgDispatcher,
         commandExecutor
       ).main(
@@ -284,9 +310,13 @@ class GenerateMavenDependenciesListTest {
     val coordsList = listOf(DEP_WITH_INVALID_LINKS)
     setUpBazelEnvironment(coordsList)
 
-    val exception = assertThrows(Exception::class) {
+    val exception = assertThrows<Exception>() {
       GenerateMavenDependenciesList(
+<<<<<<< HEAD
         mockArtifactPropertyFetcher,
+=======
+        mockLicenseFetcher,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         scriptBgDispatcher,
         commandExecutor
       ).main(
@@ -327,9 +357,13 @@ class GenerateMavenDependenciesListTest {
     val coordsList = listOf(DEP_WITH_NO_LICENSE)
     setUpBazelEnvironment(coordsList)
 
-    val exception = assertThrows(Exception::class) {
+    val exception = assertThrows<Exception>() {
       GenerateMavenDependenciesList(
+<<<<<<< HEAD
         mockArtifactPropertyFetcher,
+=======
+        mockLicenseFetcher,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         scriptBgDispatcher,
         commandExecutor
       ).main(
@@ -398,7 +432,11 @@ class GenerateMavenDependenciesListTest {
     setUpBazelEnvironment(coordsList)
 
     GenerateMavenDependenciesList(
+<<<<<<< HEAD
       mockArtifactPropertyFetcher,
+=======
+      mockLicenseFetcher,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
       scriptBgDispatcher,
       commandExecutor
     ).main(
@@ -492,7 +530,11 @@ class GenerateMavenDependenciesListTest {
     setUpBazelEnvironment(coordsList)
 
     GenerateMavenDependenciesList(
+<<<<<<< HEAD
       mockArtifactPropertyFetcher,
+=======
+      mockLicenseFetcher,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
       scriptBgDispatcher,
       commandExecutor
     ).main(
@@ -589,9 +631,13 @@ class GenerateMavenDependenciesListTest {
     )
     setUpBazelEnvironment(coordsList)
 
-    val exception = assertThrows(Exception::class) {
+    val exception = assertThrows<Exception>() {
       GenerateMavenDependenciesList(
+<<<<<<< HEAD
         mockArtifactPropertyFetcher,
+=======
+        mockLicenseFetcher,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         scriptBgDispatcher,
         commandExecutor
       ).main(
@@ -655,7 +701,11 @@ class GenerateMavenDependenciesListTest {
     setUpBazelEnvironment(coordsList)
 
     GenerateMavenDependenciesList(
+<<<<<<< HEAD
       mockArtifactPropertyFetcher,
+=======
+      mockLicenseFetcher,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
       scriptBgDispatcher,
       commandExecutor
     ).main(
@@ -767,9 +817,13 @@ class GenerateMavenDependenciesListTest {
     )
     setUpBazelEnvironment(coordsList)
 
-    val exception = assertThrows(Exception::class) {
+    val exception = assertThrows<Exception>() {
       GenerateMavenDependenciesList(
+<<<<<<< HEAD
         mockArtifactPropertyFetcher,
+=======
+        mockLicenseFetcher,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         scriptBgDispatcher,
         commandExecutor
       ).main(
@@ -893,9 +947,13 @@ class GenerateMavenDependenciesListTest {
     )
     setUpBazelEnvironment(coordsList)
 
-    val exception = assertThrows(Exception::class) {
+    val exception = assertThrows<Exception>() {
       GenerateMavenDependenciesList(
+<<<<<<< HEAD
         mockArtifactPropertyFetcher,
+=======
+        mockLicenseFetcher,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         scriptBgDispatcher,
         commandExecutor
       ).main(
@@ -1007,9 +1065,13 @@ class GenerateMavenDependenciesListTest {
     )
     setUpBazelEnvironment(coordsList)
 
-    val exception = assertThrows(Exception::class) {
+    val exception = assertThrows<Exception>() {
       GenerateMavenDependenciesList(
+<<<<<<< HEAD
         mockArtifactPropertyFetcher,
+=======
+        mockLicenseFetcher,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         scriptBgDispatcher,
         commandExecutor
       ).main(
@@ -1129,7 +1191,11 @@ class GenerateMavenDependenciesListTest {
     setUpBazelEnvironment(coordsList)
 
     GenerateMavenDependenciesList(
+<<<<<<< HEAD
       mockArtifactPropertyFetcher,
+=======
+      mockLicenseFetcher,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
       scriptBgDispatcher,
       commandExecutor
     ).main(
@@ -1379,7 +1445,7 @@ class GenerateMavenDependenciesListTest {
             "com.squareup.moshi:moshi"
           ]
         }
-      }  
+      }
       """.trimIndent()
     )
   }

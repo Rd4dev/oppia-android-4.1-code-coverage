@@ -64,7 +64,11 @@ fun main(args: Array<String>) {
   }
   ScriptBackgroundCoroutineDispatcher().use { scriptBgDispatcher ->
     ComputeAffectedTests(scriptBgDispatcher)
+<<<<<<< HEAD
       .compute(pathToRoot, pathToOutputFile, baseCommit, computeAllTestsSetting)
+=======
+      .compute(pathToRoot, pathToOutputFile, baseDevelopBranchReference, computeAllTestsSetting)
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   }
 }
 
@@ -83,10 +87,14 @@ class ComputeAffectedTests(
   val maxTestCountPerLargeShard: Int = MAX_TEST_COUNT_PER_LARGE_SHARD,
   val maxTestCountPerMediumShard: Int = MAX_TEST_COUNT_PER_MEDIUM_SHARD,
   val maxTestCountPerSmallShard: Int = MAX_TEST_COUNT_PER_SMALL_SHARD,
+<<<<<<< HEAD
   val commandExecutor: CommandExecutor =
     CommandExecutorImpl(
       scriptBgDispatcher, processTimeout = 5, processTimeoutUnit = TimeUnit.MINUTES
     )
+=======
+  val commandExecutor: CommandExecutor = CommandExecutorImpl(scriptBgDispatcher)
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 ) {
   private companion object {
     private const val GENERIC_TEST_BUCKET_NAME = "generic"
@@ -116,10 +124,17 @@ class ComputeAffectedTests(
 
     println("Running from directory root: $rootDirectory.")
 
+<<<<<<< HEAD
     val gitClient = GitClient(rootDirectory, baseCommit, commandExecutor)
     val bazelClient = BazelClient(rootDirectory, commandExecutor)
     println("Current branch: ${gitClient.currentBranch}.")
     println("Most recent common commit: ${gitClient.branchMergeBase}.")
+=======
+    val gitClient = GitClient(rootDirectory, baseDevelopBranchReference, commandExecutor)
+    val bazelClient = BazelClient(rootDirectory, commandExecutor)
+    println("Current branch: ${gitClient.currentBranch}")
+    println("Most recent common commit: ${gitClient.branchMergeBase}")
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 
     val currentBranch = gitClient.currentBranch.lowercase(Locale.US)
     val affectedTestTargets = if (computeAllTestsSetting || currentBranch == "develop") {

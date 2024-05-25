@@ -10,8 +10,13 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.oppia.android.scripts.common.BazelClient
 import org.oppia.android.scripts.common.CommandExecutor
+<<<<<<< HEAD
 import org.oppia.android.scripts.common.ScriptBackgroundCoroutineDispatcher
 import org.oppia.android.scripts.maven.model.MavenInstallJson
+=======
+import org.oppia.android.scripts.maven.model.MavenListDependency
+import org.oppia.android.scripts.maven.model.MavenListDependencyTree
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 import org.oppia.android.scripts.proto.License
 import org.oppia.android.scripts.proto.MavenDependency
 import org.oppia.android.scripts.proto.MavenDependencyList
@@ -27,8 +32,12 @@ private const val MAVEN_PREFIX = "@maven//:"
 /** Helper to compile the third-party Maven dependencies list for Oppia Android. */
 class MavenDependenciesRetriever(
   private val rootPath: String,
+<<<<<<< HEAD
   private val mavenArtifactPropertyFetcher: MavenArtifactPropertyFetcher,
   private val coroutineDispatcher: ScriptBackgroundCoroutineDispatcher,
+=======
+  private val licenseFetcher: LicenseFetcher,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   private val commandExecutor: CommandExecutor
 ) {
   private val bazelClient by lazy { BazelClient(File(rootPath), commandExecutor) }

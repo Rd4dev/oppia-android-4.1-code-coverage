@@ -37,6 +37,7 @@ import org.oppia.android.app.model.OppiaLanguage.ENGLISH
 import org.oppia.android.app.model.OppiaLanguage.HINDI
 import org.oppia.android.app.model.OppiaLanguage.HINGLISH
 import org.oppia.android.app.model.OppiaLanguage.LANGUAGE_UNSPECIFIED
+import org.oppia.android.app.model.OppiaLanguage.NIGERIAN_PIDGIN
 import org.oppia.android.app.model.OppiaLanguage.PORTUGUESE
 import org.oppia.android.app.model.OppiaLanguage.SWAHILI
 import org.oppia.android.app.model.OppiaLanguage.UNRECOGNIZED
@@ -61,6 +62,7 @@ import org.oppia.android.domain.classify.rules.numericexpressioninput.NumericExp
 import org.oppia.android.domain.classify.rules.numericinput.NumericInputRuleModule
 import org.oppia.android.domain.classify.rules.ratioinput.RatioInputModule
 import org.oppia.android.domain.classify.rules.textinput.TextInputRuleModule
+import org.oppia.android.domain.exploration.ExplorationProgressModule
 import org.oppia.android.domain.exploration.ExplorationStorageModule
 import org.oppia.android.domain.hintsandsolution.HintsAndSolutionConfigModule
 import org.oppia.android.domain.hintsandsolution.HintsAndSolutionProdModule
@@ -77,6 +79,7 @@ import org.oppia.android.domain.question.QuestionModule
 import org.oppia.android.domain.topic.PrimeTopicAssetsControllerModule
 import org.oppia.android.domain.workmanager.WorkManagerConfigurationModule
 import org.oppia.android.testing.TestLogReportingModule
+import org.oppia.android.testing.firebase.TestAuthenticationModule
 import org.oppia.android.testing.junit.InitializeDefaultLocaleRule
 import org.oppia.android.testing.junit.OppiaParameterizedTestRunner
 import org.oppia.android.testing.junit.OppiaParameterizedTestRunner.Iteration
@@ -166,6 +169,7 @@ class MathExpressionAccessibilityUtilTest {
   }
 
   @Test
+<<<<<<< HEAD
   @Iteration("LANGUAGE_UNSPECIFIED", "language=LANGUAGE_UNSPECIFIED")
   @Iteration("ARABIC", "language=ARABIC")
   @Iteration("HINDI", "language=HINDI")
@@ -174,6 +178,19 @@ class MathExpressionAccessibilityUtilTest {
   @Iteration("BRAZILIAN_PORTUGUESE", "language=BRAZILIAN_PORTUGUESE")
   @Iteration("SWAHILI", "language=SWAHILI")
   @Iteration("UNRECOGNIZED", "language=UNRECOGNIZED")
+=======
+  @RunParameterized(
+    Iteration("LANGUAGE_UNSPECIFIED", "language=LANGUAGE_UNSPECIFIED"),
+    Iteration("ARABIC", "language=ARABIC"),
+    Iteration("HINDI", "language=HINDI"),
+    Iteration("HINGLISH", "language=HINGLISH"),
+    Iteration("PORTUGUESE", "language=PORTUGUESE"),
+    Iteration("BRAZILIAN_PORTUGUESE", "language=BRAZILIAN_PORTUGUESE"),
+    Iteration("SWAHILI", "language=SWAHILI"),
+    Iteration("NIGERIAN_PIDGIN", "language=NIGERIAN_PIDGIN"),
+    Iteration("UNRECOGNIZED", "language=UNRECOGNIZED")
+  )
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   fun testConvertToString_constExp_unsupportedLanguage_returnsNull() {
     val exp = parseAlgebraicExpression("2")
     val language = OppiaLanguage.valueOf(language)
@@ -182,6 +199,7 @@ class MathExpressionAccessibilityUtilTest {
   }
 
   @Test
+<<<<<<< HEAD
   @Iteration("LANGUAGE_UNSPECIFIED", "language=LANGUAGE_UNSPECIFIED")
   @Iteration("ARABIC", "language=ARABIC")
   @Iteration("HINDI", "language=HINDI")
@@ -190,6 +208,19 @@ class MathExpressionAccessibilityUtilTest {
   @Iteration("BRAZILIAN_PORTUGUESE", "language=BRAZILIAN_PORTUGUESE")
   @Iteration("SWAHILI", "language=SWAHILI")
   @Iteration("UNRECOGNIZED", "language=UNRECOGNIZED")
+=======
+  @RunParameterized(
+    Iteration("LANGUAGE_UNSPECIFIED", "language=LANGUAGE_UNSPECIFIED"),
+    Iteration("ARABIC", "language=ARABIC"),
+    Iteration("HINDI", "language=HINDI"),
+    Iteration("HINGLISH", "language=HINGLISH"),
+    Iteration("PORTUGUESE", "language=PORTUGUESE"),
+    Iteration("BRAZILIAN_PORTUGUESE", "language=BRAZILIAN_PORTUGUESE"),
+    Iteration("SWAHILI", "language=SWAHILI"),
+    Iteration("NIGERIAN_PIDGIN", "language=NIGERIAN_PIDGIN"),
+    Iteration("UNRECOGNIZED", "language=UNRECOGNIZED")
+  )
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   fun testConvertToString_constEq_unsupportedLanguage_returnsNull() {
     val eq = parseAlgebraicEquation("x=2")
     val language = OppiaLanguage.valueOf(language)
@@ -206,7 +237,7 @@ class MathExpressionAccessibilityUtilTest {
       .asList()
       .containsExactly(
         LANGUAGE_UNSPECIFIED, ENGLISH, ARABIC, HINDI, HINGLISH, PORTUGUESE, BRAZILIAN_PORTUGUESE,
-        SWAHILI, UNRECOGNIZED
+        SWAHILI, NIGERIAN_PIDGIN, UNRECOGNIZED
       )
   }
 
@@ -1269,7 +1300,8 @@ class MathExpressionAccessibilityUtilTest {
       LoggingIdentifierModule::class, ApplicationLifecycleModule::class,
       SyncStatusModule::class, MetricLogSchedulerModule::class, TestingBuildFlavorModule::class,
       EventLoggingConfigurationModule::class, ActivityRouterModule::class,
-      CpuPerformanceSnapshotterModule::class
+      CpuPerformanceSnapshotterModule::class, ExplorationProgressModule::class,
+      TestAuthenticationModule::class
     ]
   )
   interface TestApplicationComponent : ApplicationComponent {

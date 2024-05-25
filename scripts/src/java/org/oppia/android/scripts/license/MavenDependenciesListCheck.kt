@@ -27,7 +27,11 @@ import org.oppia.android.scripts.proto.MavenDependency
  */
 fun main(args: Array<String>) {
   ScriptBackgroundCoroutineDispatcher().use { scriptBgDispatcher ->
+<<<<<<< HEAD
     MavenDependenciesListCheck(MavenArtifactPropertyFetcherImpl(), scriptBgDispatcher).main(args)
+=======
+    MavenDependenciesListCheck(LicenseFetcherImpl(), scriptBgDispatcher).main(args)
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   }
 }
 
@@ -36,7 +40,11 @@ fun main(args: Array<String>) {
  * method.
  */
 class MavenDependenciesListCheck(
+<<<<<<< HEAD
   private val mavenArtifactPropertyFetcher: MavenArtifactPropertyFetcher,
+=======
+  private val licenseFetcher: LicenseFetcher,
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   scriptBgDispatcher: ScriptBackgroundCoroutineDispatcher,
   private val commandExecutor: CommandExecutor = CommandExecutorImpl(scriptBgDispatcher)
 ) {
