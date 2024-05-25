@@ -276,6 +276,10 @@ class AppLanguageFragmentTest {
     testCoroutineDispatchers.runCurrent()
   }
 
+<<<<<<< HEAD
+  private fun createAppLanguageActivityIntent(summaryValue: String): Intent =
+    AppLanguageActivity.createAppLanguageActivityIntent(context, summaryValue)
+=======
   private fun createAppLanguageActivityIntent(oppiaLanguage: OppiaLanguage): Intent {
     return AppLanguageActivity.createAppLanguageActivityIntent(
       context,
@@ -283,6 +287,7 @@ class AppLanguageFragmentTest {
       internalProfileId
     )
   }
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 
   private fun setUpTestApplicationComponent() {
     ApplicationProvider.getApplicationContext<TestApplication>().inject(this)
@@ -329,7 +334,9 @@ class AppLanguageFragmentTest {
   )
   interface TestApplicationComponent : ApplicationComponent {
     @Component.Builder
-    interface Builder : ApplicationComponent.Builder
+    interface Builder : ApplicationComponent.Builder {
+      override fun build(): TestApplicationComponent
+    }
 
     fun inject(appLanguageFragmentTest: AppLanguageFragmentTest)
   }

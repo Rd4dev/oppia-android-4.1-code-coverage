@@ -119,6 +119,12 @@ class OptionsActivity :
     }
   }
 
+<<<<<<< HEAD
+  override fun routeAppLanguageList(appLanguage: String?) {
+    startActivityForResult(
+      AppLanguageActivity.createAppLanguageActivityIntent(this, appLanguage),
+      REQUEST_CODE_APP_LANGUAGE
+=======
   override fun routeAppLanguageList(oppiaLanguage: OppiaLanguage) {
     startActivity(
       AppLanguageActivity.createAppLanguageActivityIntent(
@@ -126,6 +132,7 @@ class OptionsActivity :
         oppiaLanguage,
         profileId!!
       )
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     )
   }
 

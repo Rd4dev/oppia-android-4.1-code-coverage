@@ -31,8 +31,12 @@ class AppLanguageFragmentPresenter @Inject constructor(
   fun handleOnCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
+<<<<<<< HEAD
+    prefSummaryValue: String
+=======
     prefSummaryValue: OppiaLanguage,
     profileId: Int
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   ): View? {
     val binding = AppLanguageFragmentBinding.inflate(
       inflater,

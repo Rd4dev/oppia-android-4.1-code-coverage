@@ -33,6 +33,13 @@ class TodoOpenCheckTest {
   private val wikiReferenceNote =
     "Refer to https://github.com/oppia/oppia-android/wiki/Static-Analysis-Checks" +
       "#todo-open-checks for more details on how to fix this."
+<<<<<<< HEAD
+  private val reRunNote =
+    "There were failures. Re-run the command with \"true\" at the end to regenerate the exemption" +
+      " file with all failures as exempted."
+
+  @field:[Rule JvmField] val tempFolder = TemporaryFolder()
+=======
   private val regenerateNote =
     "There were failures. Re-run //scripts:todo_open_check with \"regenerate\" at the end to " +
       "regenerate the exemption file with all failures as exempted."
@@ -41,6 +48,7 @@ class TodoOpenCheckTest {
 
   private val scriptBgDispatcher by lazy { ScriptBackgroundCoroutineDispatcher() }
   private val fakeCommandExecutor by lazy { FakeCommandExecutor() }
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 
   @Before
   fun setUp() {
@@ -54,7 +62,21 @@ class TodoOpenCheckTest {
   @After
   fun restoreStreams() {
     System.setOut(originalOut)
+<<<<<<< HEAD
+  }
+
+  @Test
+  fun testTodoCheck_noJsonFilePresent_checkShouldFail() {
+    val exception = assertThrows(Exception::class) {
+      runScript()
+    }
+
+    assertThat(exception).hasMessageThat().contains(
+      "open_issues.json: No such file exists"
+    )
+=======
     scriptBgDispatcher.close()
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   }
 
   @Test
@@ -109,10 +131,17 @@ class TodoOpenCheckTest {
       - TempFile.txt:3
       - TempFile.txt:4
       - TempFile.txt:5
+<<<<<<< HEAD
+      
+      $wikiReferenceNote
+      
+      $reRunNote
+=======
 
       $wikiReferenceNote
 
       $regenerateNote
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
       """.trimIndent()
     assertThat(outContent.toString().trim()).isEqualTo(failureMessage)
   }
@@ -140,10 +169,17 @@ class TodoOpenCheckTest {
       - TempFile.txt:1
       - TempFile.txt:2
       - TempFile.txt:5
+<<<<<<< HEAD
+      
+      $wikiReferenceNote
+      
+      $reRunNote
+=======
 
       $wikiReferenceNote
 
       $regenerateNote
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
       """.trimIndent()
     assertThat(outContent.toString().trim()).isEqualTo(failureMessage)
   }
@@ -178,6 +214,16 @@ class TodoOpenCheckTest {
       TODOs not in correct format:
       - TempFile1.kt:2
       - TempFile2.kt:1
+<<<<<<< HEAD
+      
+      TODOs not corresponding to open issues on GitHub:
+      - TempFile1.kt:1
+      - TempFile2.kt:3
+      
+      $wikiReferenceNote
+      
+      $reRunNote
+=======
 
       TODOs not corresponding to open issues on GitHub:
       - TempFile1.kt:1
@@ -186,6 +232,7 @@ class TodoOpenCheckTest {
       $wikiReferenceNote
 
       $regenerateNote
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
       """.trimIndent()
     assertThat(outContent.toString().trim()).isEqualTo(failureMessage)
   }
@@ -228,6 +275,16 @@ class TodoOpenCheckTest {
       - Activity.kt:2
       - Fragment.kt:1
       - Presenter.kt:2
+<<<<<<< HEAD
+      
+      TODOs not corresponding to open issues on GitHub:
+      - Fragment.kt:3
+      - Presenter.kt:1
+      
+      $wikiReferenceNote
+      
+      $reRunNote
+=======
 
       TODOs not corresponding to open issues on GitHub:
       - Fragment.kt:3
@@ -236,6 +293,7 @@ class TodoOpenCheckTest {
       $wikiReferenceNote
 
       $regenerateNote
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
       """.trimIndent()
     assertThat(outContent.toString().trim()).isEqualTo(failureMessage)
   }
@@ -320,16 +378,32 @@ class TodoOpenCheckTest {
       - TempFile1.kt:2
       - TempFile2.kt:1
       Please remove them from scripts/assets/todo_exemptions.textproto
+<<<<<<< HEAD
+      
+      $reRunNote
+=======
 
       $regenerateNote
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
       """.trimIndent()
     assertThat(outContent.toString().trim()).isEqualTo(failureMessage)
   }
 
   @Test
   fun testTodoCheck_combineMultipleFailures_checkShouldFailWithAllErrorsLogged() {
+<<<<<<< HEAD
+    val testJSONContent =
+      """
+      [{"number":1000000},{"number":152440222},{"number":152440223},{"number":11001}]
+      """.trimIndent()
+    val testJSONFile = tempFolder.newFile("testfiles/open_issues.json")
+    testJSONFile.writeText(testJSONContent)
+    tempFolder.newFolder("testfiles/extra_dir")
+    val tempFile1 = tempFolder.newFile("testfiles/extra_dir/TempFile1.kt")
+=======
     setUpGitHubService(issueNumbers = listOf(1000000, 152440222, 152440223, 11001))
     val tempFile1 = tempFolder.newFile("testfiles/TempFile1.kt")
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     val tempFile2 = tempFolder.newFile("testfiles/TempFile2.kt")
     val testContent1 =
       """
@@ -348,7 +422,7 @@ class TodoOpenCheckTest {
       this.addAllTodoOpenExemption(
         listOf(
           TodoOpenExemption.newBuilder().apply {
-            this.exemptedFilePath = "TempFile1.kt"
+            this.exemptedFilePath = "extra_dir/TempFile1.kt"
             this.addAllLineNumber(listOf(1, 2)).build()
           }.build()
         )
@@ -362,11 +436,20 @@ class TodoOpenCheckTest {
     val failureMessage =
       """
       Redundant exemptions (there are no TODOs corresponding to these lines):
-      - TempFile1.kt:2
+      - extra_dir/TempFile1.kt:2
       Please remove them from scripts/assets/todo_exemptions.textproto
 
       TODOs not in correct format:
       - TempFile2.kt:1
+<<<<<<< HEAD
+      
+      TODOs not corresponding to open issues on GitHub:
+      - extra_dir/TempFile1.kt:3
+      
+      $wikiReferenceNote
+      
+      $reRunNote
+=======
 
       TODOs not corresponding to open issues on GitHub:
       - TempFile1.kt:3
@@ -374,11 +457,33 @@ class TodoOpenCheckTest {
       $wikiReferenceNote
 
       $regenerateNote
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
       """.trimIndent()
     assertThat(outContent.toString().trim()).isEqualTo(failureMessage)
   }
 
   @Test
+<<<<<<< HEAD
+  fun testTodoCheck_multipleFailureTypes_withRegenerationEnabled_outputsUpdatedTextProto() {
+    val testJSONContent =
+      """
+      [{"number":1000000},{"number":152440222},{"number":152440223},{"number":11001}]
+      """.trimIndent()
+    val testJSONFile = tempFolder.newFile("testfiles/open_issues.json")
+    testJSONFile.writeText(testJSONContent)
+    tempFolder.newFolder("testfiles/extra_dir")
+    val tempFile1 = tempFolder.newFile("testfiles/extra_dir/TempFile1.kt")
+    val tempFile2 = tempFolder.newFile("testfiles/TempFile2.kt")
+    val testContent1 =
+      """
+      // TODO(#15244): test content 1
+      // TODO(#152440223): test description 1
+      // TODO(#10000000000000): test description 2
+      """.trimIndent()
+    val testContent2 =
+      """
+      # test content TODO(#11001): test description 2
+=======
   fun testRegenerate_noTodos_checkShouldSkip() {
     setUpGitHubService(issueNumbers = listOf(11004, 11003, 11002, 11001))
     val tempFile1 = tempFolder.newFile("testfiles/TempFile1.kt")
@@ -507,6 +612,7 @@ class TodoOpenCheckTest {
     val testContent2 =
       """
       # TODO(#1000000): test description 2
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
       """.trimIndent()
     tempFile1.writeText(testContent1)
     tempFile2.writeText(testContent2)
@@ -515,18 +621,66 @@ class TodoOpenCheckTest {
       this.addAllTodoOpenExemption(
         listOf(
           TodoOpenExemption.newBuilder().apply {
+<<<<<<< HEAD
+            this.exemptedFilePath = "extra_dir/TempFile1.kt"
+            this.addAllLineNumber(listOf(1, 2)).build()
+=======
             this.exemptedFilePath = "TempFile1.kt"
             this.addAllLineNumber(listOf(1)).build()
           }.build(),
           TodoOpenExemption.newBuilder().apply {
             this.exemptedFilePath = "TempFile2.kt"
             this.addAllLineNumber(listOf(1)).build()
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
           }.build()
         )
       )
     }.build()
     exemptions.writeTo(exemptionFile.outputStream())
 
+<<<<<<< HEAD
+    val exception = assertThrows(Exception::class) {
+      runScript(regenerateFile = true)
+    }
+
+    assertThat(exception).hasMessageThat().contains(TODO_SYNTAX_CHECK_FAILED_OUTPUT_INDICATOR)
+    val failureMessage =
+      """
+      Redundant exemptions (there are no TODOs corresponding to these lines):
+      - extra_dir/TempFile1.kt:2
+      Please remove them from scripts/assets/todo_exemptions.textproto
+      
+      TODOs not in correct format:
+      - TempFile2.kt:1
+      
+      TODOs not corresponding to open issues on GitHub:
+      - extra_dir/TempFile1.kt:3
+      
+      $wikiReferenceNote
+      
+      Regenerated exemptions:
+      
+      todo_open_exemption {
+        exempted_file_path: "TempFile2.kt"
+        line_number: 1
+      }
+      todo_open_exemption {
+        exempted_file_path: "extra_dir/TempFile1.kt"
+        line_number: 1
+        line_number: 3
+      }
+      """.trimIndent()
+    assertThat(outContent.toString().trim()).isEqualTo(failureMessage)
+  }
+
+  /** Runs the todo_open_check. */
+  private fun runScript(regenerateFile: Boolean = false) {
+    main(
+      "${tempFolder.root}/testfiles",
+      "${tempFolder.root}/$pathToProtoBinary",
+      "open_issues.json",
+      regenerateFile.toString()
+=======
     val exception = assertThrows<Exception>() { runScript(regenerateFile = true) }
 
     // 'regenerate' always throws an exception since it's regenerating everything.
@@ -802,6 +956,7 @@ class TodoOpenCheckTest {
     TodoOpenCheck(repoRoot, scriptBgDispatcher, fakeCommandExecutor).runTodoOpenCheck(
       pathToProtoBinary = "${tempFolder.root}/$pathToProtoBinary",
       regenerateFile
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     )
   }
 }

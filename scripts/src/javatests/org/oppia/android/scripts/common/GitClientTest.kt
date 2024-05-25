@@ -36,7 +36,11 @@ class GitClientTest {
     // Print the status of the git repository to help with debugging in the cases of test failures
     // and to help manually verify the expected git state at the end of each test.
     println("git status (at end of test):")
+<<<<<<< HEAD
+    println(testGitRepository.status())
+=======
     println(testGitRepository.status(checkForGitRepository = false))
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     scriptBgDispatcher.close()
   }
 

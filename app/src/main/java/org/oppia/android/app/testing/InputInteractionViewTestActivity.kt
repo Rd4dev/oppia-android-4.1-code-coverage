@@ -3,7 +3,6 @@ package org.oppia.android.app.testing
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.databinding.DataBindingUtil
 import org.oppia.android.R
 import org.oppia.android.app.activity.ActivityComponentImpl
@@ -58,10 +57,23 @@ class InputInteractionViewTestActivity :
     writtenTranslationContext = params.writtenTranslationContext
 
     binding.numericInputViewModel = numericInputViewModel
+<<<<<<< HEAD
+    binding.textInputViewModel = textInputViewModel
+    binding.fractionInteractionViewModel = fractionInteractionViewModel
+    binding.ratioInteractionInputViewModel = ratioExpressionInputInteractionViewModel
+    binding.mathExpressionInteractionsViewModel = mathExpressionViewModel
+    binding.getPendingAnswerErrorOnSubmitClick = Runnable {
+      fractionInteractionViewModel.checkPendingAnswerError(AnswerErrorCategory.SUBMIT_TIME)
+      numericInputViewModel.checkPendingAnswerError(AnswerErrorCategory.SUBMIT_TIME)
+      ratioExpressionInputInteractionViewModel
+        .checkPendingAnswerError(AnswerErrorCategory.SUBMIT_TIME)
+    }
+=======
   }
 
   fun getPendingAnswerErrorOnSubmitClick(v: View) {
     numericInputViewModel.checkPendingAnswerError(AnswerErrorCategory.SUBMIT_TIME)
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   }
 
   override fun onPendingAnswerErrorOrAvailabilityCheck(

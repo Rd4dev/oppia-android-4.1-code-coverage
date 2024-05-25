@@ -21,11 +21,36 @@ import javax.inject.Inject
 class AppLanguageActivity : InjectableAutoLocalizedAppCompatActivity() {
   @Inject
   lateinit var appLanguageActivityPresenter: AppLanguageActivityPresenter
+<<<<<<< HEAD
+  private lateinit var prefSummaryValue: String
+=======
   private var profileId: Int? = -1
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     (activityComponent as ActivityComponentImpl).inject(this)
+<<<<<<< HEAD
+    prefSummaryValue = if (savedInstanceState == null) {
+      checkNotNull(intent.getStringExtra(APP_LANGUAGE_PREFERENCE_SUMMARY_VALUE_EXTRA_KEY)) {
+        "Expected $APP_LANGUAGE_PREFERENCE_SUMMARY_VALUE_EXTRA_KEY to be in intent extras."
+      }
+    } else {
+      savedInstanceState.get(SELECTED_LANGUAGE_EXTRA_KEY) as String
+    }
+    appLanguageActivityPresenter.handleOnCreate(prefSummaryValue)
+  }
+
+  companion object {
+    const val APP_LANGUAGE_PREFERENCE_SUMMARY_VALUE_EXTRA_KEY =
+      "AppLanguageActivity.app_language_preference_summary_value"
+    internal const val SELECTED_LANGUAGE_EXTRA_KEY = "AppLanguageActivity.selected_language"
+
+    /** Returns a new [Intent] to route to [AppLanguageActivity]. */
+    fun createAppLanguageActivityIntent(context: Context, summaryValue: String?): Intent {
+      return Intent(context, AppLanguageActivity::class.java).apply {
+        putExtra(APP_LANGUAGE_PREFERENCE_SUMMARY_VALUE_EXTRA_KEY, summaryValue)
+=======
     profileId = intent.getIntExtra(NAVIGATION_PROFILE_ID_ARGUMENT_KEY, -1)
     appLanguageActivityPresenter.handleOnCreate(
       savedInstanceState?.retrieveLanguageFromSavedState() ?: intent.retrieveLanguageFromParams(),
@@ -49,10 +74,15 @@ class AppLanguageActivity : InjectableAutoLocalizedAppCompatActivity() {
         }.build()
         putProtoExtra(ACTIVITY_PARAMS_KEY, arguments)
         putExtra(NAVIGATION_PROFILE_ID_ARGUMENT_KEY, profileId)
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         decorateWithScreenName(APP_LANGUAGE_ACTIVITY)
       }
     }
 
+<<<<<<< HEAD
+    fun getAppLanguagePreferenceSummaryValueExtraKey(): String {
+      return APP_LANGUAGE_PREFERENCE_SUMMARY_VALUE_EXTRA_KEY
+=======
     private fun Intent.retrieveLanguageFromParams(): OppiaLanguage {
       return getProtoExtra(
         ACTIVITY_PARAMS_KEY, AppLanguageActivityParams.getDefaultInstance()
@@ -63,6 +93,7 @@ class AppLanguageActivity : InjectableAutoLocalizedAppCompatActivity() {
       return getProto(
         ACTIVITY_SAVED_STATE_KEY, AppLanguageActivityStateBundle.getDefaultInstance()
       ).oppiaLanguage
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     }
   }
 

@@ -39,7 +39,11 @@ class TestGitRepositoryTest {
   private val commandExecutorInterceptor by lazy { CommandExecutorInterceptor(scriptBgDispatcher) }
 
   @After
+<<<<<<< HEAD
+  fun restoreStreams() {
+=======
   fun tearDown() {
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     scriptBgDispatcher.close()
   }
 

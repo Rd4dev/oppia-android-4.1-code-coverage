@@ -476,7 +476,14 @@ class OptionsFragmentTest {
       }.build()
       intended(
         allOf(
+<<<<<<< HEAD
+          hasExtra(
+            AppLanguageActivity.getAppLanguagePreferenceSummaryValueExtraKey(),
+            "English"
+          ),
+=======
           hasProtoExtra("AppLanguageActivity.params", expectedParams),
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
           hasComponent(AppLanguageActivity::class.java.name)
         )
       )
@@ -506,7 +513,14 @@ class OptionsFragmentTest {
       }.build()
       intended(
         allOf(
+<<<<<<< HEAD
+          hasExtra(
+            AppLanguageActivity.getAppLanguagePreferenceSummaryValueExtraKey(),
+            "English"
+          ),
+=======
           hasProtoExtra("AppLanguageActivity.params", expectedParams),
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
           hasComponent(AppLanguageActivity::class.java.name)
         )
       )
@@ -651,7 +665,9 @@ class OptionsFragmentTest {
   )
   interface TestApplicationComponent : ApplicationComponent {
     @Component.Builder
-    interface Builder : ApplicationComponent.Builder
+    interface Builder : ApplicationComponent.Builder {
+      override fun build(): TestApplicationComponent
+    }
 
     fun inject(optionsFragmentTest: OptionsFragmentTest)
   }

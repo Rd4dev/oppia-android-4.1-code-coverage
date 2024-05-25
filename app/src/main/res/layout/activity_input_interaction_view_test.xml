@@ -11,6 +11,24 @@
       name="numericInputViewModel"
       type="org.oppia.android.app.player.state.itemviewmodel.NumericInputViewModel" />
 
+<<<<<<< HEAD
+    <variable
+      name="textInputViewModel"
+      type="org.oppia.android.app.player.state.itemviewmodel.TextInputViewModel" />
+
+    <variable
+      name="ratioInteractionInputViewModel"
+      type="org.oppia.android.app.player.state.itemviewmodel.RatioExpressionInputInteractionViewModel" />
+
+    <variable
+      name="mathExpressionInteractionsViewModel"
+      type="org.oppia.android.app.player.state.itemviewmodel.MathExpressionInteractionsViewModel" />
+
+    <variable
+      name="getPendingAnswerErrorOnSubmitClick"
+      type="java.lang.Runnable" />
+=======
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   </data>
 
   <ScrollView
@@ -64,8 +82,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+<<<<<<< HEAD
+        android:onClick="@{(v) -> getPendingAnswerErrorOnSubmitClick.run()}"
+        android:text="Submit"
+=======
         android:onClick="getPendingAnswerErrorOnSubmitClick"
         android:text="@string/submit_button_text"
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
         android:textColor="@color/component_color_shared_secondary_4_text_color" />
     </LinearLayout>
   </ScrollView>

@@ -1,5 +1,6 @@
 package org.oppia.android.app.utility
 
+import android.annotation.SuppressLint
 import android.graphics.RectF
 import android.view.MotionEvent
 import android.view.View
@@ -9,7 +10,7 @@ import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.core.view.isVisible
 import org.oppia.android.R
-import org.oppia.android.app.model.ImageWithRegions
+import org.oppia.android.app.model.ImageWithRegions.LabeledRegion
 import org.oppia.android.app.player.state.ImageRegionSelectionInteractionView
 import org.oppia.android.app.shim.ViewBindingShim
 import kotlin.math.roundToInt
@@ -21,10 +22,13 @@ class ClickableAreasImage(
   private val listener: OnClickableAreaClickedListener,
   bindingInterface: ViewBindingShim,
   private val isAccessibilityEnabled: Boolean,
-  private val clickableAreas: List<ImageWithRegions.LabeledRegion>
+  private val clickableAreas: List<LabeledRegion>
 ) {
   private val defaultRegionView by lazy { bindingInterface.getDefaultRegion(parentView) }
 
+<<<<<<< HEAD
+  init { initializeShowRegionTouchListener() }
+=======
   init {
     imageView.setOnTouchListener { view, motionEvent ->
       if (motionEvent.action == MotionEvent.ACTION_DOWN) {
@@ -34,6 +38,7 @@ class ClickableAreasImage(
       return@setOnTouchListener false
     }
   }
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 
   /**
    * Called when an image is clicked.
@@ -111,6 +116,9 @@ class ClickableAreasImage(
       newView.isFocusable = true
       newView.isFocusableInTouchMode = true
       newView.tag = clickableArea.label
+<<<<<<< HEAD
+      newView.initializeToggleRegionTouchListener(clickableArea)
+=======
       newView.setOnTouchListener { view, event ->
         if (event.action == MotionEvent.ACTION_DOWN) {
           showOrHideRegion(newView, clickableArea)
@@ -118,6 +126,7 @@ class ClickableAreasImage(
         view.performClick()
         return@setOnTouchListener true
       }
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
       if (isAccessibilityEnabled) {
         // Make default region visibility gone when talkback enabled to avoid any accidental touch.
         defaultRegionView.isVisible = false
@@ -144,7 +153,7 @@ class ClickableAreasImage(
     }
   }
 
-  private fun showOrHideRegion(newView: View, clickableArea: ImageWithRegions.LabeledRegion) {
+  private fun showOrHideRegion(newView: View, clickableArea: LabeledRegion) {
     resetRegionSelectionViews()
     listener.onClickableAreaTouched(
       NamedRegionClickedEvent(
@@ -153,5 +162,25 @@ class ClickableAreasImage(
       )
     )
     newView.setBackgroundResource(R.drawable.selected_region_background)
+  }
+
+  @SuppressLint("ClickableViewAccessibility") // Accessibility is custom-handled for image regions.
+  private fun initializeShowRegionTouchListener() {
+    imageView.setOnTouchListener { _, motionEvent ->
+      if (motionEvent.action == MotionEvent.ACTION_DOWN) {
+        onPhotoTap(motionEvent.x, motionEvent.y)
+      }
+      return@setOnTouchListener false
+    }
+  }
+
+  @SuppressLint("ClickableViewAccessibility") // See initializeShowRegionTouchListener.
+  private fun View.initializeToggleRegionTouchListener(clickableArea: LabeledRegion) {
+    setOnTouchListener { _, event ->
+      if (event.action == MotionEvent.ACTION_DOWN) {
+        showOrHideRegion(this@initializeToggleRegionTouchListener, clickableArea)
+      }
+      return@setOnTouchListener true
+    }
   }
 }

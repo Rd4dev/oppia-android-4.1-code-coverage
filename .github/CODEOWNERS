@@ -312,8 +312,19 @@ gradle.properties @oppia/android-app-infrastructure-reviewers
 # Binary files (which should rarely be introduced to help minimize repo size).
 *.png @oppia/owners
 
+<<<<<<< HEAD
+# Bazel build files. This is added after everything else to ensure Bazel files are always reviewed by the same people.
+WORKSPACE @BenHenning
+*.bzl @BenHenning
+*.bazel @BenHenning
+.bazelrc @BenHenning
+.bazelversion @BenHenning
+/tools/android/ @BenHenning
+/tools/kotlin/ @BenHenning
+=======
 # Firebase project integration details (that should generally never change).
 /app/google-services.json @oppia/owners
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 
 # Configurations for the languages supported by the app.
 /config/**/alllanguages/*.textproto @oppia/owners

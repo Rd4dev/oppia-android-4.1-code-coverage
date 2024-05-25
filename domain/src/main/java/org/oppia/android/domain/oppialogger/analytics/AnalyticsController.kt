@@ -6,9 +6,9 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.stateIn
@@ -324,6 +324,8 @@ class AnalyticsController @Inject constructor(
     }
   }
 
+<<<<<<< HEAD
+=======
   /**
    * Listens to the flow emitted by the [ConsoleLogger] and logs the error messages.
    */
@@ -404,6 +406,7 @@ class AnalyticsController @Inject constructor(
     }.await()
   }
 
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   private companion object {
     private suspend fun <T> resolveProfileOperation(
       profileId: ProfileId?,

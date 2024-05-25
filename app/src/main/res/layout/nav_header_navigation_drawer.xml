@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:profile="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <data>
 
@@ -30,8 +29,12 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
+<<<<<<< HEAD
+      app:profileImageSource="@{viewModel.profile.avatar}" />
+=======
       app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.RoundedShape"
       profile:src="@{viewModel.profile.avatar}" />
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 
     <TextView
       android:id="@+id/nav_header_profile_name"

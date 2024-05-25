@@ -115,6 +115,10 @@ class OptionsActivityPresenter @Inject constructor(
     getOptionFragment()?.setSelectedFragment(READING_TEXT_SIZE_FRAGMENT)
   }
 
+<<<<<<< HEAD
+  fun loadAppLanguageFragment(appLanguage: String) {
+    val appLanguageFragment = AppLanguageFragment.newInstance(appLanguage)
+=======
   /**
    * Returns a new instance of [AppLanguageFragment].
    *
@@ -123,6 +127,7 @@ class OptionsActivityPresenter @Inject constructor(
   fun loadAppLanguageFragment(appLanguage: OppiaLanguage) {
     val appLanguageFragment =
       AppLanguageFragment.newInstance(appLanguage, profileId = this.profileId!!)
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     activity.supportFragmentManager
       .beginTransaction()
       .replace(R.id.multipane_options_container, appLanguageFragment)

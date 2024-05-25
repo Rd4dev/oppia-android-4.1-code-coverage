@@ -49,7 +49,11 @@ class ScriptBackgroundCoroutineDispatcherTest {
     dispatcher.close()
 
     // The task should fail to schedule since the dispatcher has been closed.
+<<<<<<< HEAD
+    assertThrows(CancellationException::class) {
+=======
     assertThrows<CancellationException>() {
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
       runBlocking { withContext(dispatcher) { mockRunnable.run() } }
     }
   }
@@ -72,8 +76,11 @@ class ScriptBackgroundCoroutineDispatcherTest {
     runBlocking { taskStartedChannel.receive() }
 
     dispatcher.close()
+<<<<<<< HEAD
+=======
     // This slows down the test, but provides assurance that the task was definitely cancelled.
     runBlocking { delay(2_000L) }
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 
     // The task should not have run since it was cancelled, but no exception will be thrown.
     verifyNoMoreInteractions(mockRunnable)

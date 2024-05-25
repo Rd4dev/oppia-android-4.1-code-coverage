@@ -8,6 +8,7 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import org.oppia.android.scripts.common.CommandExecutor
 import org.oppia.android.scripts.common.CommandExecutorImpl
+import org.oppia.android.scripts.common.GitClient
 import org.oppia.android.scripts.common.ProtoStringEncoder.Companion.mergeFromCompressedBase64
 import org.oppia.android.scripts.common.ScriptBackgroundCoroutineDispatcher
 import org.oppia.android.scripts.proto.AffectedTestsBucket
@@ -43,7 +44,11 @@ class ComputeAffectedTestsTest {
 
   @Before
   fun setUp() {
+<<<<<<< HEAD
+    commandExecutor = CommandExecutorImpl(scriptBgDispatcher)
+=======
     commandExecutor = initializeCommandExecutorWithLongProcessWaitTime()
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     testBazelWorkspace = TestBazelWorkspace(tempFolder)
     testGitRepository = TestGitRepository(tempFolder, commandExecutor)
 
@@ -61,7 +66,11 @@ class ComputeAffectedTestsTest {
     // Print the status of the git repository to help with debugging in the cases of test failures
     // and to help manually verify the expect git state at the end of each test.
     println("git status (at end of test):")
+<<<<<<< HEAD
+    println(testGitRepository.status())
+=======
     println(testGitRepository.status(checkForGitRepository = false))
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 
     scriptBgDispatcher.close()
   }
@@ -139,7 +148,11 @@ class ComputeAffectedTestsTest {
 
   @Test
   fun testUtility_emptyDirectory_throwsException() {
+<<<<<<< HEAD
+    val exception = assertThrows(IllegalStateException::class) { runScript(currentHeadHash = "ad") }
+=======
     val exception = assertThrows<IllegalStateException>() { runScript() }
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 
     assertThat(exception).hasMessageThat().contains("run from the workspace's root directory")
   }
@@ -529,7 +542,9 @@ class ComputeAffectedTestsTest {
     createBasicTests("AppTest1", "AppTest2", "AppTest3", subpackage = "app")
 
     val reportedTargets = runScriptWithShardLimits(
-      maxTestCountPerLargeShard = 3, maxTestCountPerMediumShard = 2, maxTestCountPerSmallShard = 1
+      maxTestCountPerLargeShard = 3,
+      maxTestCountPerMediumShard = 2,
+      maxTestCountPerSmallShard = 1
     )
 
     // App module tests partition eagerly, so there should be 3 groups. Also, the code below
@@ -550,7 +565,9 @@ class ComputeAffectedTestsTest {
     createBasicTests("DataTest1", "DataTest2", "DataTest3", subpackage = "data")
 
     val reportedTargets = runScriptWithShardLimits(
-      maxTestCountPerLargeShard = 3, maxTestCountPerMediumShard = 2, maxTestCountPerSmallShard = 1
+      maxTestCountPerLargeShard = 3,
+      maxTestCountPerMediumShard = 2,
+      maxTestCountPerSmallShard = 1
     )
 
     // Data tests are partitioned such that they are combined into one partition.
@@ -566,7 +583,9 @@ class ComputeAffectedTestsTest {
     createBasicTests("DomainTest1", "DomainTest2", "DomainTest3", subpackage = "domain")
 
     val reportedTargets = runScriptWithShardLimits(
-      maxTestCountPerLargeShard = 3, maxTestCountPerMediumShard = 2, maxTestCountPerSmallShard = 1
+      maxTestCountPerLargeShard = 3,
+      maxTestCountPerMediumShard = 2,
+      maxTestCountPerSmallShard = 1
     )
 
     // Domain tests are partitioned such that they are combined into one partition.
@@ -585,7 +604,9 @@ class ComputeAffectedTestsTest {
     )
 
     val reportedTargets = runScriptWithShardLimits(
-      maxTestCountPerLargeShard = 3, maxTestCountPerMediumShard = 2, maxTestCountPerSmallShard = 1
+      maxTestCountPerLargeShard = 3,
+      maxTestCountPerMediumShard = 2,
+      maxTestCountPerSmallShard = 1
     )
 
     // Instrumentation tests are partitioned such that they are combined into one partition.
@@ -604,7 +625,9 @@ class ComputeAffectedTestsTest {
     createBasicTests("ScriptsTest1", "ScriptsTest2", "ScriptsTest3", subpackage = "scripts")
 
     val reportedTargets = runScriptWithShardLimits(
-      maxTestCountPerLargeShard = 3, maxTestCountPerMediumShard = 2, maxTestCountPerSmallShard = 1
+      maxTestCountPerLargeShard = 3,
+      maxTestCountPerMediumShard = 2,
+      maxTestCountPerSmallShard = 1
     )
 
     // See app module test above for specifics. Scripts tests are medium partitioned which means 3
@@ -624,7 +647,9 @@ class ComputeAffectedTestsTest {
     createBasicTests("TestingTest1", "TestingTest2", "TestingTest3", subpackage = "testing")
 
     val reportedTargets = runScriptWithShardLimits(
-      maxTestCountPerLargeShard = 3, maxTestCountPerMediumShard = 2, maxTestCountPerSmallShard = 1
+      maxTestCountPerLargeShard = 3,
+      maxTestCountPerMediumShard = 2,
+      maxTestCountPerSmallShard = 1
     )
 
     // Testing tests are partitioned such that they are combined into one partition.
@@ -640,7 +665,9 @@ class ComputeAffectedTestsTest {
     createBasicTests("UtilityTest1", "UtilityTest2", "UtilityTest3", subpackage = "utility")
 
     val reportedTargets = runScriptWithShardLimits(
-      maxTestCountPerLargeShard = 3, maxTestCountPerMediumShard = 2, maxTestCountPerSmallShard = 1
+      maxTestCountPerLargeShard = 3,
+      maxTestCountPerMediumShard = 2,
+      maxTestCountPerSmallShard = 1
     )
 
     // Utility tests are partitioned such that they are combined into one partition.
@@ -698,11 +725,16 @@ class ComputeAffectedTestsTest {
       .containsExactly("//scripts:ScriptsTest1", "//scripts:ScriptsTest2")
   }
 
-  private fun runScriptWithTextOutput(computeAllTargets: Boolean = false): List<String> {
+  private fun runScriptWithTextOutput(
+    currentHeadHash: String = computeMergeBase("develop"),
+    computeAllTargets: Boolean = false
+  ): List<String> {
     val outputLog = tempFolder.newFile("output.log")
     main(
       arrayOf(
-        tempFolder.root.absolutePath, outputLog.absolutePath, "develop",
+        tempFolder.root.absolutePath,
+        outputLog.absolutePath,
+        currentHeadHash,
         "compute_all_tests=$computeAllTargets"
       )
     )
@@ -714,16 +746,21 @@ class ComputeAffectedTestsTest {
    * here is that which is saved directly to the output file, not debug lines printed to the
    * console.
    */
-  private fun runScript(computeAllTargets: Boolean = false): List<AffectedTestsBucket> {
-    return parseOutputLogLines(runScriptWithTextOutput(computeAllTargets = computeAllTargets))
+  private fun runScript(
+    currentHeadHash: String = computeMergeBase("develop"),
+    computeAllTargets: Boolean = false
+  ): List<AffectedTestsBucket> {
+    return parseOutputLogLines(runScriptWithTextOutput(currentHeadHash, computeAllTargets))
   }
 
   private fun runScriptWithShardLimits(
+    baseBranch: String = "develop",
     maxTestCountPerLargeShard: Int,
     maxTestCountPerMediumShard: Int,
     maxTestCountPerSmallShard: Int
   ): List<AffectedTestsBucket> {
     val outputLog = tempFolder.newFile("output.log")
+    val currentHeadHash = computeMergeBase(baseBranch)
 
     // Note that main() can't be used since the shard counts need to be overwritten. Dagger would
     // be a nicer means to do this, but it's not set up currently for scripts.
@@ -736,7 +773,7 @@ class ComputeAffectedTestsTest {
     ).compute(
       pathToRoot = tempFolder.root.absolutePath,
       pathToOutputFile = outputLog.absolutePath,
-      baseDevelopBranchReference = "develop",
+      baseCommit = currentHeadHash,
       computeAllTestsSetting = false
     )
 
@@ -871,9 +908,14 @@ class ComputeAffectedTestsTest {
     testGitRepository.commit(message = "Modified library $name")
   }
 
+<<<<<<< HEAD
+  private fun computeMergeBase(referenceBranch: String): String =
+    GitClient(tempFolder.root, referenceBranch, commandExecutor).branchMergeBase
+=======
   private fun initializeCommandExecutorWithLongProcessWaitTime(): CommandExecutorImpl {
     return CommandExecutorImpl(
       scriptBgDispatcher, processTimeout = 5, processTimeoutUnit = TimeUnit.MINUTES
     )
   }
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 }

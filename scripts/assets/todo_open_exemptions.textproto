@@ -3,6 +3,13 @@ todo_open_exemption {
   line_number: 78
 }
 todo_open_exemption {
+<<<<<<< HEAD
+  exempted_file_path: "scripts/src/java/org/oppia/android/scripts/todo/TodoCollector.kt"
+  line_number: 79
+}
+todo_open_exemption {
+=======
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   exempted_file_path: "scripts/src/java/org/oppia/android/scripts/todo/model/Todo.kt"
   line_number: 12
 }
@@ -232,21 +239,65 @@ todo_open_exemption {
 }
 todo_open_exemption {
   exempted_file_path: "scripts/src/javatests/org/oppia/android/scripts/todo/TodoIssueResolvedCheckTest.kt"
-  line_number: 71
-  line_number: 73
-  line_number: 79
-  line_number: 95
-  line_number: 97
-  line_number: 103
+  line_number: 70
+  line_number: 72
+  line_number: 78
+  line_number: 94
+  line_number: 96
+  line_number: 102
+  line_number: 129
   line_number: 131
-  line_number: 133
-  line_number: 139
+  line_number: 137
+  line_number: 141
   line_number: 143
-  line_number: 145
-  line_number: 146
-  line_number: 177
-  line_number: 179
+  line_number: 144
+  line_number: 173
+  line_number: 175
+  line_number: 181
   line_number: 185
+<<<<<<< HEAD
+  line_number: 187
+  line_number: 188
+}
+todo_open_exemption {
+  exempted_file_path: "scripts/src/javatests/org/oppia/android/scripts/todo/TodoOpenCheckTest.kt"
+  line_number: 68
+  line_number: 69
+  line_number: 75
+  line_number: 77
+  line_number: 99
+  line_number: 100
+  line_number: 101
+  line_number: 102
+  line_number: 103
+  line_number: 139
+  line_number: 140
+  line_number: 143
+  line_number: 178
+  line_number: 179
+  line_number: 180
+  line_number: 185
+  line_number: 187
+  line_number: 228
+  line_number: 229
+  line_number: 230
+  line_number: 235
+  line_number: 237
+  line_number: 243
+  line_number: 284
+  line_number: 288
+  line_number: 326
+  line_number: 327
+  line_number: 331
+  line_number: 383
+  line_number: 384
+  line_number: 385
+  line_number: 389
+  line_number: 443
+  line_number: 444
+  line_number: 445
+  line_number: 449
+=======
   line_number: 189
   line_number: 191
   line_number: 192
@@ -337,6 +388,7 @@ todo_open_exemption {
 todo_open_exemption {
   exempted_file_path: "scripts/static_checks.sh"
   line_number: 110
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 }
 todo_open_exemption {
   exempted_file_path: "wiki/Coding-style-guide.md"

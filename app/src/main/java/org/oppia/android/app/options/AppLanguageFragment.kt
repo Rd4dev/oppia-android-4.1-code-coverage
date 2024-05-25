@@ -15,6 +15,13 @@ import org.oppia.android.util.extensions.getProto
 import org.oppia.android.util.extensions.putProto
 import javax.inject.Inject
 
+<<<<<<< HEAD
+private const val APP_LANGUAGE_PREFERENCE_SUMMARY_VALUE_ARGUMENT_KEY =
+  "AppLanguageFragment.app_language_preference_summary_value"
+private const val SELECTED_LANGUAGE_SAVED_KEY = "AppLanguageFragment.selected_language"
+
+=======
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
 /** The fragment to change the language of the app. */
 class AppLanguageFragment : InjectableFragment(), AppLanguageRadioButtonListener {
 
@@ -23,6 +30,14 @@ class AppLanguageFragment : InjectableFragment(), AppLanguageRadioButtonListener
   private var profileId: Int? = -1
 
   companion object {
+<<<<<<< HEAD
+    fun newInstance(prefsSummaryValue: String): AppLanguageFragment {
+      val fragment = AppLanguageFragment()
+      val args = Bundle()
+      args.putString(APP_LANGUAGE_PREFERENCE_SUMMARY_VALUE_ARGUMENT_KEY, prefsSummaryValue)
+      fragment.arguments = args
+      return fragment
+=======
     private const val FRAGMENT_ARGUMENTS_KEY = "AppLanguageFragment.arguments"
     private const val FRAGMENT_SAVED_STATE_KEY = "AppLanguageFragment.saved_state"
 
@@ -49,6 +64,7 @@ class AppLanguageFragment : InjectableFragment(), AppLanguageRadioButtonListener
       return getProto(
         FRAGMENT_SAVED_STATE_KEY, AppLanguageFragmentStateBundle.getDefaultInstance()
       ).oppiaLanguage
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     }
   }
 
@@ -62,6 +78,19 @@ class AppLanguageFragment : InjectableFragment(), AppLanguageRadioButtonListener
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
+<<<<<<< HEAD
+    val args =
+      checkNotNull(arguments) { "Expected arguments to be passed to AppLanguageFragment" }
+    val prefsSummaryValue = if (savedInstanceState == null) {
+      args.getStringFromBundle(APP_LANGUAGE_PREFERENCE_SUMMARY_VALUE_ARGUMENT_KEY)
+    } else {
+      savedInstanceState.get(SELECTED_LANGUAGE_SAVED_KEY) as String
+    }
+    return appLanguageFragmentPresenter.handleOnCreateView(
+      inflater,
+      container,
+      prefsSummaryValue!!
+=======
 
     val oppiaLanguage =
       checkNotNull(
@@ -75,6 +104,7 @@ class AppLanguageFragment : InjectableFragment(), AppLanguageRadioButtonListener
       container,
       oppiaLanguage!!,
       profileId!!
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
     )
   }
 
@@ -86,7 +116,12 @@ class AppLanguageFragment : InjectableFragment(), AppLanguageRadioButtonListener
     outState.putProto(FRAGMENT_SAVED_STATE_KEY, state)
   }
 
+<<<<<<< HEAD
+  override fun onLanguageSelected(appLanguage: String) {
+    appLanguageFragmentPresenter.onLanguageSelected(appLanguage)
+=======
   override fun onLanguageSelected(selectedLanguage: OppiaLanguage) {
     appLanguageFragmentPresenter.onLanguageSelected(selectedLanguage)
+>>>>>>> a0deeea74289c94797dd9d3729ee7c157030ab67
   }
 }

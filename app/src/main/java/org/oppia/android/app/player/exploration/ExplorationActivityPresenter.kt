@@ -33,7 +33,6 @@ import org.oppia.android.app.survey.TAG_SURVEY_WELCOME_DIALOG
 import org.oppia.android.app.topic.TopicActivity
 import org.oppia.android.app.translation.AppLanguageResourceHandler
 import org.oppia.android.app.utility.FontScaleConfigurationUtil
-import org.oppia.android.app.viewmodel.ViewModelProvider
 import org.oppia.android.databinding.ExplorationActivityBinding
 import org.oppia.android.domain.exploration.ExplorationDataController
 import org.oppia.android.domain.oppialogger.OppiaLogger
@@ -56,7 +55,7 @@ const val TAG_HINTS_AND_SOLUTION_EXPLORATION_MANAGER = "HINTS_AND_SOLUTION_EXPLO
 class ExplorationActivityPresenter @Inject constructor(
   private val activity: AppCompatActivity,
   private val explorationDataController: ExplorationDataController,
-  private val viewModelProvider: ViewModelProvider<ExplorationViewModel>,
+  private val exploreViewModel: ExplorationViewModel,
   private val fontScaleConfigurationUtil: FontScaleConfigurationUtil,
   private val translationController: TranslationController,
   private val oppiaLogger: OppiaLogger,
@@ -80,10 +79,6 @@ class ExplorationActivityPresenter @Inject constructor(
   private lateinit var oldestCheckpointExplorationId: String
   private lateinit var oldestCheckpointExplorationTitle: String
   private lateinit var binding: ExplorationActivityBinding
-
-  private val exploreViewModel by lazy {
-    getExplorationViewModel()
-  }
 
   fun handleOnCreate(
     context: Context,
@@ -353,10 +348,6 @@ class ExplorationActivityPresenter @Inject constructor(
           it.writtenTranslationContext
         )
     }
-  }
-
-  private fun getExplorationViewModel(): ExplorationViewModel {
-    return viewModelProvider.getForActivity(activity, ExplorationViewModel::class.java)
   }
 
   /** Helper for subscribeToExploration. */
