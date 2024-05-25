@@ -321,7 +321,7 @@ jobs:
 
       - name: Run Math Model
         run: |
-          bazel test --keep_going -- //utility/src/test/java/org/oppia/android/util/parser/math:MathModelTest
+          bazel test //utility/src/test/java/org/oppia/android/util/parser/math:MathModelTest
 
 
   # Reference: https://github.community/t/127354/7.
